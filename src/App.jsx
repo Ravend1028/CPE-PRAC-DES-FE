@@ -1,12 +1,9 @@
 import React from 'react'
+import Header from './components/Header'
 
 const App = () => {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline text-center">
-        Hello Thesis Balagbagan Na!
-      </h1>
-    </div>
+    <Header />
   )
 }
 
