@@ -1,0 +1,5 @@
+Tech I Used:
+
+- React JS
+- Tailwind CSS
+- JSON-Server Library

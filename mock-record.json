@@ -1,55 +1,23 @@
 {
-  "people": [
+  "person": [
     {
       "id": 1,
-      "name": "John Doe",
-      "age": 30,
+      "name": "Raven David",
+      "age": 22,
       "gender": "Male",
       "vitalStatistics": {
-        "height": "180 cm",
-        "weight": "75 kg",
-        "bloodPressure": "120/80 mmHg",
-        "heartRate": "72 bpm",
-        "respiratoryRate": "16 breaths/min",
-        "bodyTemperature": "36.5°C",
-        "BMI": "23.1"
+        "height": "123",
+        "weight": "123",
+        "bodyTemperature": "123",
+        "pulseRate": "123",
+        "bloodPressure": "123",
+        "respiratoryRate": "123",
+        "blood oxigen level": "123",
+        "BMI": "123"
       },
       "contactDetails": {
-        "email": "johndoe@example.com",
-        "phone": "+123456789"
-      },
-      "address": {
-        "street": "123 Main Street",
-        "city": "Sample City",
-        "state": "Sample State",
-        "country": "Sample Country",
-        "zipCode": "12345"
-      }
-    },
-    {
-      "id": 2,
-      "name": "Jane Smith",
-      "age": 28,
-      "gender": "Female",
-      "vitalStatistics": {
-        "height": "165 cm",
-        "weight": "60 kg",
-        "bloodPressure": "110/70 mmHg",
-        "heartRate": "75 bpm",
-        "respiratoryRate": "18 breaths/min",
-        "bodyTemperature": "36.7°C",
-        "BMI": "22.0"
-      },
-      "contactDetails": {
-        "email": "janesmith@example.com",
-        "phone": "+987654321"
-      },
-      "address": {
-        "street": "456 Another St",
-        "city": "Another City",
-        "state": "Another State",
-        "country": "Another Country",
-        "zipCode": "67890"
+        "email": "ravendavid.rd30@gmail.com",
+        "phone": "09485272118"
       }
     }
   ]
