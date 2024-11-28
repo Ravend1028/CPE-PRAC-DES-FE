@@ -1,9 +1,9 @@
 import React from 'react'
-import logo from '../../public/cdm-logo.png'
+import avatar from '../assets/images/david-img.jpg'
 
 const PersonDetails = () => {
   return (
-    <div className='border-2 border-black p-3 rounded-md font-poppins flex flex-row justify-between items-center space-x-5'>
+    <div className='border-2 border-black p-3 rounded-md font-poppins flex flex-row justify-between items-center space-x-5 bg-amber-500'>
       <div className="details">
         <h4 className='font-bold'>
           Raven David
@@ -18,7 +18,7 @@ const PersonDetails = () => {
         </h6>
       </div>
 
-      <img src={ logo } alt="cdm-logo" className='w-20'/>
+      <img src={ avatar } alt="cdm-logo" className='w-20 rounded-full'/>
 
     </div>
   )

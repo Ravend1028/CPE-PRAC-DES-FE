@@ -3,8 +3,8 @@ import logo from '../../public/cdm-logo.png'
 
 const Header = () => {
   return (
-    <header>
-      <div className='container mx-auto p-6 flex justify-between items-center font-poppins'>
+    <header className='mb-5'>
+      <div className='container mx-auto p-6 flex justify-between items-center font-poppins border-b border-slate-300'>
         <div className="space-x-2 flex flex-row justify-center items-center">
           <img src={ logo } alt="cdm-logo" className='w-20'/>
           <h3 className='font-bold text-lg uppercase'>CpE Practice and Design 1</h3>
