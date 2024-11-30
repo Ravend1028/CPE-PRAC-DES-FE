@@ -1,5 +1,5 @@
-import React from 'react'
-import logo from '../../public/cdm-logo.png'
+import React from 'react';
+import logo from '../../public/cdm-logo.png';
 
 const Header = () => {
   return (
