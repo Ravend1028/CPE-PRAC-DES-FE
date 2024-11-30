@@ -1,13 +1,28 @@
-import React from 'react'
-import Header from './components/Header'
-import Dashboard from './components/Dashboard'
+import React from 'react';
+import { 
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider
+ } from 'react-router';
+ import Main from './layouts/Main';
+ import Home from './pages/Home';
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      <Route index element = { <Home/>} />
+
+      <Route path = '/' element = { <Main/> }>
+        <Route path = '' element/>
+      </Route>
+    </>
+  )
+);
 
 const App = () => {
   return (
-   <>
-     <Header />
-     <Dashboard />
-   </>
+   <RouterProvider router={ router } />
   )
 }
 
