@@ -7,6 +7,7 @@ import {
  } from 'react-router';
  import Main from './layouts/Main';
  import Home from './pages/Home';
+ import Form from './pages/Form';
  import Records from './pages/Records'
 
 const router = createBrowserRouter(
@@ -15,6 +16,7 @@ const router = createBrowserRouter(
       <Route index element = { <Home/>} />
 
       <Route path = '/' element = { <Main/> }>
+        <Route path='/form' element = { <Form/> }/>
         <Route path = 'records' element = { <Records/> }/>
       </Route>
     </>
