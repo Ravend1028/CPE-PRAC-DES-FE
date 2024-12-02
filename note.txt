@@ -6,4 +6,4 @@ Tech I Used:
 - Chart JS Library
 - React Chart JS 2
 - React Router
-- Particles JS
+- React Spinners

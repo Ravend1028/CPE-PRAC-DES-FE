@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <section className="h-screen">
       <div className="container mx-auto p-16 flex flex-col justify-center items-start font-poppins space-y-16">
-        <h2 className='font-bold text-6xl uppercase'>
+        <h2 className='font-bold text-5xl uppercase'>
           Predictive Vital Signs Patient Monitoring and Recording Kiosk for Philippines Health Centers Applying Long Short-Term Memory Algorithm
         </h2>
 
@@ -37,13 +37,17 @@ const Home = () => {
         </div>
 
         <div className="flex flex-row space-x-5">
-          <button className='bg-slate-950 text-gray-200 p-3 rounded-md text-xl hover:text-amber-500'>
-            <Link to="/form">Start Now</Link>
-          </button>
-
-          <button className='p-3 rounded-md text-xl border-2 border-slate-950 hover:text-amber-500 hover:bg-slate-950'>
-            <Link to = "/records">View Records</Link>
-          </button>
+          <Link to="/form">
+            <button className='bg-slate-950 text-gray-200 p-3 rounded-md text-xl hover:text-amber-500'>
+              Start Now
+            </button>
+          </Link>
+          
+          <Link to = "/records">
+            <button className='p-3 rounded-md text-xl border-2 border-slate-950 hover:text-amber-500 hover:bg-slate-950'>
+              View Records
+            </button>
+          </Link>
         </div>
       </div>
     </section>
