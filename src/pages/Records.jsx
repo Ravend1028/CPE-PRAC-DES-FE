@@ -11,7 +11,7 @@ const Records = () => {
 
       try {
         const response = await fetch(url, {
-          method: "POST"
+          method: "GET"
         });
 
         if (!response.ok) {
@@ -28,7 +28,6 @@ const Records = () => {
 
     fetchRecords();
   }, []);
-
 
   return (
     <main>
