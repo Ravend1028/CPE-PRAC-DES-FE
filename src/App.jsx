@@ -10,6 +10,7 @@ import {
  import Form from './pages/Form';
  import Records from './pages/Records'
  import PatientRecord from './pages/PatientRecord';
+ import Readings from './pages/Readings';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,6 +19,7 @@ const router = createBrowserRouter(
 
       <Route path = '/' element = { <Main/> }>
         <Route path = '/form' element = { <Form/> }/>
+        <Route path = '/form/readings' element = { <Readings/> }/>
         <Route path = '/records' element = { <Records/> }/>
         <Route path = '/records/:id' element = { <PatientRecord/> }/>
       </Route>

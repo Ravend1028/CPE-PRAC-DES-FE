@@ -1,5 +1,5 @@
 import React from 'react';
-import avatar from '../assets/images/david-img.jpg';
+import avatar from '../assets/images/avatar-placeholder.jpg';
 import PredictionButton from './PredictionButton';
 
 const PersonDetails = ({ name, age, gender, email, phone }) => {

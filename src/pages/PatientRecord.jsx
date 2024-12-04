@@ -53,8 +53,8 @@ const PatientRecord = () => {
   const chartData = [
     {
       parameter: 'BMI',
-      labels: ['Height', 'Weight', 'Waist Circumference'],
-      datas: [vitalStatistics.height, vitalStatistics.weight, vitalStatistics.BMI],
+      labels: ['Height', 'Weight', 'Waist Circumference', 'BMI'],
+      datas: [vitalStatistics.height, vitalStatistics.weight, vitalStatistics.waistCircumference, vitalStatistics.BMI],
     },
     {
       parameter: 'CARDIOVASCULAR HEALTH',

@@ -46,7 +46,7 @@ const Records = () => {
       <div className="container mx-auto p-6 flex justify-center items-center">
         <RecordsTable>
           { records.map((record) => (
-            <tr key = { record.id } className = { record.id % 2 == 1 ? 'bg-gray-300 cursor-pointer hover:bg-gray-400' : 'cursor-pointer hover:bg-gray-400' } onClick = { () => { handleRecordClick(record.id) } }>
+            <tr key = { record.id } className = { record.id % 2 == 1 ? 'bg-slate-300 cursor-pointer hover:bg-slate-400' : 'cursor-pointer hover:bg-slate-400' } onClick = { () => { handleRecordClick(record.id) } }>
               <td className="border-r border-slate-950 p-2 text-center">{ record.name }</td>
               <td className="border-r border-slate-950 p-2 text-center">{ record.age }</td>
               <td className="border-r border-slate-950 p-2 text-center">{ record.gender }</td>

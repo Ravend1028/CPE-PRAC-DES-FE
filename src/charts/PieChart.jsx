@@ -24,9 +24,10 @@ const PieChart = ({ label, labels = [], datas = [] }) => {
       label: label,
       data: datas,
       backgroundColor: [
-        'rgb(255, 99, 132)',
-        'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)'
+        'rgb(170, 50, 50)',
+        'rgb(50, 170, 50)',
+        'rgb(50, 50, 170)',
+        'rgb(50, 50, 50)'
       ],
       hoverOffset: 4
     }]
