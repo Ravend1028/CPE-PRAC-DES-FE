@@ -4,8 +4,8 @@ import { Link } from 'react-router';
 
 const Home = () => {
   return (
-    <section className="h-screen">
-      <div className="container mx-auto p-16 flex flex-col justify-center items-start font-poppins space-y-16">
+    <section>
+      <div className="container mx-auto p-12 flex flex-col justify-center items-start font-poppins space-y-16 h-[100vh]">
         <h2 className='font-bold text-5xl uppercase'>
           Predictive Vital Signs Patient Monitoring and Recording Kiosk for Philippines Health Centers Applying Long Short-Term Memory Algorithm
         </h2>

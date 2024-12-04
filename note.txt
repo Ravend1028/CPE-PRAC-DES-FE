@@ -1,9 +1,12 @@
 Tech I Used:
 
+** FRONTEND
+
 - React JS
 - Tailwind CSS
-- JSON-Server Library 
-- Chart JS Library
-- React Chart JS 2
+- JSON-Server 
+- Chart JS 
+- React Chart JS 2 
 - React Router
 - React Spinners
+- React Icons

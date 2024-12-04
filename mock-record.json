@@ -4,6 +4,8 @@
       "id": "1",
       "name": "Raven David",
       "age": 22,
+      "email": "ravendavid.rd30@gmail.com",
+      "phone": "0912456",
       "gender": "Male",
       "vitalStatistics": {
         "height": "123",
@@ -14,17 +16,43 @@
         "respiratoryRate": "123",
         "blood oxigen level": "123",
         "BMI": "123"
-      },
-      "contactDetails": {
-        "email": "ravendavid.rd30@gmail.com",
-        "phone": "09485272118"
       }
     },
     {
-      "id": "1ed4"
+      "id": "2",
+      "name": "Jonathan Casalla",
+      "age": 35,
+      "email": "jonathan69@gmail.com",
+      "phone": "09987654",
+      "gender": "Bading",
+      "vitalStatistics": {
+        "height": "123",
+        "weight": "123",
+        "bodyTemperature": "123",
+        "pulseRate": "123",
+        "bloodPressure": "123",
+        "respiratoryRate": "123",
+        "blood oxigen level": "123",
+        "BMI": "123"
+      }
     },
     {
-      "id": "c38f"
+      "id": "3",
+      "name": "Kenneth Javier",
+      "age": 45,
+      "email": "bading101@gmail.com",
+      "phone": "09987654",
+      "gender": "Bading",
+      "vitalStatistics": {
+        "height": "123",
+        "weight": "123",
+        "bodyTemperature": "123",
+        "pulseRate": "123",
+        "bloodPressure": "123",
+        "respiratoryRate": "123",
+        "blood oxigen level": "123",
+        "BMI": "123"
+      }
     }
   ]
 }

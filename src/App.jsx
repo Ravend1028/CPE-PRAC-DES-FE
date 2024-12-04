@@ -17,7 +17,7 @@ const router = createBrowserRouter(
 
       <Route path = '/' element = { <Main/> }>
         <Route path='/form' element = { <Form/> }/>
-        <Route path = 'records' element = { <Records/> }/>
+        <Route path = '/records' element = { <Records/> }/>
       </Route>
     </>
   )

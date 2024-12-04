@@ -19,6 +19,7 @@ const Dashboard = () => {
           <Chart parameter={ "GENERAL HEALTH" }>
             <PieChart labels={["Respiratory Rate", "Temperature"]} datas={[10, 10, 10]}/>
           </Chart>
+          
           <PersonDetails />
         </div>
       </div>

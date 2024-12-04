@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 
 const Header = () => {
   return (
-    <header className='mb-5'>
+    <header>
       <div className='container mx-auto p-6 flex justify-between items-center font-poppins border-b border-slate-300'>
         <div className="space-x-2 flex flex-row justify-center items-center">
           <Link to = "/"><img src={ logo } alt="cdm-logo" className='w-20'/></Link>
