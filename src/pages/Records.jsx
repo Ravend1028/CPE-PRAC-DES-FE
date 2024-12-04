@@ -2,11 +2,13 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { MdModeEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
-import Table from '../components/Table';
+import RecordsTable from '../components/RecordsTable';
+import { useNavigate } from 'react-router';
 
 const Records = () => {
 
   const [records, setRecords] = useState([]);
+  const navigate = useNavigate();
 
   useEffect( () => {
     const fetchRecords = async () => {
@@ -32,17 +34,24 @@ const Records = () => {
     fetchRecords();
   }, []);
 
+  const handleRecordClick = (id) => {
+    navigate(`/records/${ id }`);
+  };
+
+  // If functional programming is a must, then consider separating the anonymous function in button event handler
+  // into a separate stand alone function, that calls the handleRecordClick() function
+
   return (
     <main>
       <div className="container mx-auto p-6 flex justify-center items-center">
-        <Table>
-          {records.map((record) => (
-            <tr key = { record.id } className = { record.id % 2 == 1 ? 'bg-gray-300' : '' }>
-              <td className="border-r border-slate-950 p-2">{ record.name }</td>
-              <td className="border-r border-slate-950 p-2">{ record.age }</td>
-              <td className="border-r border-slate-950 p-2">{ record.gender }</td>
-              <td className="border-r border-slate-950 p-2">{ record.phone }</td>
-              <td className="border-r border-slate-950 p-2">{ record.email }</td>
+        <RecordsTable>
+          { records.map((record) => (
+            <tr key = { record.id } className = { record.id % 2 == 1 ? 'bg-gray-300 cursor-pointer hover:bg-gray-400' : 'cursor-pointer hover:bg-gray-400' } onClick = { () => { handleRecordClick(record.id) } }>
+              <td className="border-r border-slate-950 p-2 text-center">{ record.name }</td>
+              <td className="border-r border-slate-950 p-2 text-center">{ record.age }</td>
+              <td className="border-r border-slate-950 p-2 text-center">{ record.gender }</td>
+              <td className="border-r border-slate-950 p-2 text-center">{ record.phone }</td>
+              <td className="border-r border-slate-950 p-2 text-center">{ record.email }</td>
               <td className="border-r border-slate-950 p-2 flex justify-center space-x-3">
                 <button className='bg-slate-950 text-gray-200 rounded-md p-3'>
                   <MdModeEdit />
@@ -53,8 +62,8 @@ const Records = () => {
                 </button>
               </td>
             </tr>
-          ))}
-        </Table>
+          )) }
+        </RecordsTable>
       </div>
     </main>
   )

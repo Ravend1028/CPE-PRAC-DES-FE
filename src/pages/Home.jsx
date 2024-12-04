@@ -2,10 +2,12 @@ import React from 'react';
 import logo from '../../public/cdm-logo.png';
 import { Link } from 'react-router';
 
+// To be worked on soon
+
 const Home = () => {
   return (
     <section>
-      <div className="container mx-auto p-12 flex flex-col justify-center items-start font-poppins space-y-16 h-[100vh]">
+      <div className="container mx-auto p-12 flex flex-col justify-center items-start font-poppins space-y-16 h-[95vh]">
         <h2 className='font-bold text-5xl uppercase'>
           Predictive Vital Signs Patient Monitoring and Recording Kiosk for Philippines Health Centers Applying Long Short-Term Memory Algorithm
         </h2>

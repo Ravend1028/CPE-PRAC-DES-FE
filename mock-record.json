@@ -4,18 +4,18 @@
       "id": "1",
       "name": "Raven David",
       "age": 22,
-      "email": "ravendavid.rd30@gmail.com",
-      "phone": "0912456",
+      "email": "ravenpogi@gmail.com",
+      "phone": "09123456",
       "gender": "Male",
       "vitalStatistics": {
-        "height": "123",
-        "weight": "123",
-        "bodyTemperature": "123",
-        "pulseRate": "123",
-        "bloodPressure": "123",
-        "respiratoryRate": "123",
-        "blood oxigen level": "123",
-        "BMI": "123"
+        "height": "111",
+        "weight": "111",
+        "bodyTemperature": "111",
+        "pulseRate": "111",
+        "bloodPressure": "111",
+        "respiratoryRate": "111",
+        "bloodOxigenLevel": "111",
+        "BMI": "111"
       }
     },
     {
@@ -23,17 +23,17 @@
       "name": "Jonathan Casalla",
       "age": 35,
       "email": "jonathan69@gmail.com",
-      "phone": "09987654",
-      "gender": "Bading",
+      "phone": "09123456",
+      "gender": "Male",
       "vitalStatistics": {
-        "height": "123",
-        "weight": "123",
-        "bodyTemperature": "123",
-        "pulseRate": "123",
-        "bloodPressure": "123",
-        "respiratoryRate": "123",
-        "blood oxigen level": "123",
-        "BMI": "123"
+        "height": "222",
+        "weight": "222",
+        "bodyTemperature": "222",
+        "pulseRate": "222",
+        "bloodPressure": "222",
+        "respiratoryRate": "222",
+        "bloodOxigenLevel": "222",
+        "BMI": "222"
       }
     },
     {
@@ -41,17 +41,17 @@
       "name": "Kenneth Javier",
       "age": 45,
       "email": "bading101@gmail.com",
-      "phone": "09987654",
-      "gender": "Bading",
+      "phone": "09123456",
+      "gender": "Male",
       "vitalStatistics": {
-        "height": "123",
-        "weight": "123",
-        "bodyTemperature": "123",
-        "pulseRate": "123",
-        "bloodPressure": "123",
-        "respiratoryRate": "123",
-        "blood oxigen level": "123",
-        "BMI": "123"
+        "height": "333",
+        "weight": "333",
+        "bodyTemperature": "333",
+        "pulseRate": "333",
+        "bloodPressure": "333",
+        "respiratoryRate": "333",
+        "bloodOxigenLevel": "333",
+        "BMI": "333"
       }
     }
   ]

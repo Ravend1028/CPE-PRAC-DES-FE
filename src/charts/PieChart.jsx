@@ -37,12 +37,11 @@ const PieChart = ({ label, labels = [], datas = [] }) => {
     <div className='flex flex-col space-y-8 font-poppins text-gray-200 p-3'>
       <Pie options = { options } data = { data } />
 
-      {/* Displaying labels */}
       <div className="labels">
         <ul>
           {labels.map((label, index) => (
             <li key={ index } className='mb-1'>
-              { label }:
+              { label }: <span className="font-bold">{ datas[index] }</span>
             </li>
           ))}
         </ul>

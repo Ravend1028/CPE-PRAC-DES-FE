@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import Spinner from '../components/Spinner';
 
+// To be worked on soon
 
 const Form = () => {
   const [loading, setLoading] = useState(true);
@@ -12,7 +13,7 @@ const Form = () => {
         <Spinner loading = { loading } />
 
         <h3 className='font-bold text-3xl uppercase'>
-          Processing Data ...
+          Processing Data From Raspberry Pi Using WebSockets ...
         </h3>
       </div>
     </main>

@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Table = ({ children }) => {
+const RecordsTable = ({ children }) => {
   return (
-    <main>
-      <table className='table-auto border border-slate-950 font-poppins text-slate-950 w-[1200px]'>
+    <section>
+      <table className='table-auto border border-slate-950 font-poppins text-slate-950 w-[1300px]'>
         <caption class="caption-top font-bold text-3xl mb-5">
           MOCK RECORDS
         </caption>
@@ -23,8 +23,8 @@ const Table = ({ children }) => {
         { children }
        </tbody>
       </table>
-    </main>
+    </section>
   )
 }
 
-export default Table
+export default RecordsTable
