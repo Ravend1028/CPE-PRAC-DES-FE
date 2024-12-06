@@ -4,8 +4,8 @@ import PredictionButton from './PredictionButton';
 
 const PersonDetails = ({ name, age, gender, email, phone }) => {
   return (
-    <div className='border-1 border-black p-3 rounded-md font-poppins flex flex-col justify-center items-center bg-amber-500 space-y-10'>
-      <img src={ avatar } alt="cdm-logo" className='w-1/2 rounded-full'/>
+    <div className='container mx-auto border-1 border-black p-3 rounded-md font-poppins flex flex-col justify-center items-center bg-amber-500 space-y-10 w-[500px] h-[500px]'>
+      <img src={ avatar } alt="cdm-logo" className='w-1/4 rounded-full'/>
       
       <div className="details">
         <h4 className='font-bold'>

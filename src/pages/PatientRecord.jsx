@@ -1,11 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import Dashboard from '../components/Dashboard';
-import Chart from '../components/Chart';
-import PieChart from '../charts/PieChart';
-import PersonDetails from '../components/PersonDetails';
+import GaugeComponent from '../components/Gauge';
 import Spinner from '../components/Spinner';
+import PersonDetails from '../components/PersonDetails';
 
 const PatientRecord = () => {
 
@@ -28,7 +26,7 @@ const PatientRecord = () => {
     
         const json = await response.json();
 
-        console.log(json);
+        // console.log(json);
         // setRecord(json.person.find((p) => p.id === String(id)));
         // setRecord(json.person.find((p) => p.id === id));
         // console.log(json)
@@ -48,44 +46,26 @@ const PatientRecord = () => {
     return <Spinner loading={ loading } />; // Render a loading state while fetching
   }
 
-  const { vitalStatistics } = record;
-
-  const chartData = [
-    {
-      parameter: 'BMI',
-      labels: ['Height', 'Weight', 'Waist Circumference', 'BMI'],
-      datas: [vitalStatistics.height, vitalStatistics.weight, vitalStatistics.waistCircumference, vitalStatistics.BMI],
-    },
-    {
-      parameter: 'CARDIOVASCULAR HEALTH',
-      labels: ['Pulse Rate', 'Blood Oxygen Level', 'Blood Pressure'],
-      datas: [vitalStatistics.pulseRate, vitalStatistics.bloodOxigenLevel, vitalStatistics.bloodPressure],
-    },
-    {
-      parameter: 'GENERAL HEALTH',
-      labels: ['Respiratory Rate', 'Temperature'],
-      datas: [vitalStatistics.respiratoryRate, vitalStatistics.bodyTemperature],
-    },
-  ];
+  const { vitalStatistics, name, age, gender, email, phone } = record;
 
   return (
     <main>
-      <div className="container mx-auto p-6">
-        <Dashboard>
-          { chartData.map((chart, index) => (
-            <Chart key = { index } parameter = { chart.parameter }>
-              <PieChart labels = { chart.labels } datas = { chart.datas } />
-            </Chart>
+      <div className="container mx-auto p-6 flex flex-row justify-center items-start space-x-5">
+        <div className="grid grid-cols-3 gap-4">
+          { Object.entries(vitalStatistics).map(([key, value]) => (
+            <div key={key} className="border-2 border-slate-950 rounded-md p-5">
+              <GaugeComponent uom={key} value={value} />
+            </div>
           )) }
+        </div>
 
-          <PersonDetails
-            name = { record.name } 
-            age = { record.age }
-            gender = { record.gender }
-            email = { record.email }
-            phone = { record.phone }
-          />
-        </Dashboard>
+        <PersonDetails
+          name={name}
+          age={age}
+          gender={gender}
+          email={email}
+          phone={phone}
+        />
       </div>
     </main>
   )

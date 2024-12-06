@@ -1,10 +1,11 @@
 import React from 'react'
+import PredictionButton from '../components/PredictionButton'
 
 const Readings = () => {
   return (
     <main>
-      <div className="container mx-auto p-6 flex flex-col justify-center items-center font-poppins">
-        <h2 className='font-bold text-slate-950 text-3xl uppercase mb-5'>
+      <div className="container mx-auto p-6 flex flex-col justify-center items-center font-poppins space-y-5">
+        <h2 className='font-bold text-slate-950 text-3xl uppercase'>
           Readings
         </h2>
         
@@ -40,6 +41,14 @@ const Readings = () => {
 
             <label for="bodyTemperature">Body Temperature:</label>
             <input type="text" id="bodyTemperature" name="bodyTemperature" className='mb-2 rounded-md text-slate-950 p-1' /><br/>
+          </div>
+
+          <div className='flex flex-col mt-6 space-y-5 font-bold'>
+            <button className='bg-amber-600 text-slate-950 rounded-md p-2 text-md hover:bg-amber-500'>
+              Save Record 
+            </button>
+
+            <PredictionButton style = 'bg-amber-600 text-slate-950 rounded-md p-2 text-md hover:bg-amber-500'/>
           </div>
         </form>
       </div>

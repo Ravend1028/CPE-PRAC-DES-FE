@@ -1,7 +1,5 @@
 import React from 'react';
 import PersonDetails from './PersonDetails';
-import Chart from './Chart';
-import PieChart from '../charts/PieChart';
 
 const Dashboard = ({ children }) => {
   return (
