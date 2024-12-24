@@ -1,10 +1,9 @@
 import React from 'react';
 import avatar from '../assets/images/avatar-placeholder.jpg';
-import PredictionButton from './PredictionButton';
 
-const PersonDetails = ({ name, age, gender, email, phone }) => {
+const PersonDetails = ({ name, age, gender, email, phone, children }) => {
   return (
-    <div className='container mx-auto border-1 border-black p-3 rounded-md font-poppins flex flex-col justify-center items-center bg-amber-500 space-y-10 w-[500px] h-[500px]'>
+    <div className='container mx-auto border-1 border-black p-3 rounded-md font-poppins flex flex-col justify-center items-center bg-amber-500 space-y-10 w-[500px] h-[400px]'>
       <img src={ avatar } alt="cdm-logo" className='w-1/4 rounded-full'/>
       
       <div className="details">
@@ -25,7 +24,7 @@ const PersonDetails = ({ name, age, gender, email, phone }) => {
         </h6>
       </div>
 
-      <PredictionButton />
+      { children }
     </div>
   )
 }

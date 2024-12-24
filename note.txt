@@ -10,3 +10,7 @@ Tech I Used:
 - React Router
 - React Spinners
 - React Icons
+
+TO DO:
+
+- Form Actions (CRUD OPERATIONS)

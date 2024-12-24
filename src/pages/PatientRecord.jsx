@@ -4,12 +4,19 @@ import { useParams } from 'react-router';
 import GaugeComponent from '../components/Gauge';
 import Spinner from '../components/Spinner';
 import PersonDetails from '../components/PersonDetails';
+import PredictionResult from '../components/PredictionResult';
+import PredictionButton from '../components/PredictionButton';
 
 const PatientRecord = () => {
 
   const { id } = useParams();
   const [record, setRecord] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showResult, setShowResult] = useState(false);
+
+  const handleShowResultClick = () => {
+    setShowResult(!showResult)
+  };
 
   useEffect( () => {
     const fetchRecord = async () => {
@@ -59,13 +66,23 @@ const PatientRecord = () => {
           )) }
         </div>
 
-        <PersonDetails
-          name={name}
-          age={age}
-          gender={gender}
-          email={email}
-          phone={phone}
-        />
+        <div className='flex flex-col space-y-5'>
+          <PersonDetails
+            name={name}
+            age={age}
+            gender={gender}
+            email={email}
+            phone={phone}
+          >
+            <PredictionButton onClick={ handleShowResultClick } />
+          </PersonDetails>
+
+          {
+            showResult ? <PredictionResult /> : ''
+          }
+
+          
+        </div>
       </div>
     </main>
   )

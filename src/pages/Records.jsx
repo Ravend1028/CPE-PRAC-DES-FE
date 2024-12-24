@@ -41,6 +41,23 @@ const Records = () => {
   // If functional programming is a must, then consider separating the anonymous function in button event handler
   // into a separate stand alone function, that calls the handleRecordClick() function
 
+  const handleDeleteRecord = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3000/person/${ id }`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        alert('Record deleted successfully!');
+      } else {
+        alert('Failed to delete record.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred while deleting the record.');
+    }
+  }
+
   return (
     <main>
       <div className="container mx-auto p-6 flex justify-center items-center">
@@ -58,7 +75,10 @@ const Records = () => {
                 </button>
 
                 <button className='bg-red-800 text-gray-200 rounded-md p-3'>
-                  <MdDelete />
+                  <MdDelete onClick = { (e) => { 
+                                e.stopPropagation(); 
+                                handleDeleteRecord( record.id );
+                                location.reload(); } } />
                 </button>
               </td>
             </tr>
