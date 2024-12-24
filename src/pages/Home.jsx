@@ -9,7 +9,7 @@ const Home = () => {
     <Hero>
       <div className="flex flex-row space-x-7 z-10">
         <Link to="/form">
-          <button className='bg-amber-600 text-gray-200 p-3 rounded-md text-xl hover:bg-amber-500 hover:text-slate-950'>
+          <button className='bg-amber-600 p-3 rounded-md text-xl hover:bg-amber-500 hover:text-slate-950'>
             Start Now
           </button>
         </Link>
