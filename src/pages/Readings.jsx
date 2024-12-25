@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import PredictionButton from '../components/PredictionButton';
+import FormData from '../components/FormData';
 
 // This one needs knowledge in woking with forms using React
 // form handling and sanitization/validations etc.
@@ -13,10 +13,7 @@ const Readings = () => {
           Readings
         </h2>
 
-        
-
-
-        
+        <FormData />
       </div>
     </main>
   )

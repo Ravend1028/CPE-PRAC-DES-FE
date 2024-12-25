@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import Spinner from '../components/Spinner';
 import { Link } from 'react-router';
+import Spinner from '../components/Spinner';
 
 // To be worked on soon,
 // Flow will be as follow:
