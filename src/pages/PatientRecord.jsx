@@ -12,14 +12,10 @@ const PatientRecord = () => {
   const { id } = useParams();
   const [record, setRecord] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showResult, setShowResult] = useState(false);
-
-  const handleShowResultClick = () => {
-    setShowResult(!showResult)
-  };
 
   useEffect( () => {
     const fetchRecord = async () => {
+      // Should i do proxying ?
       const url = `http://localhost:3000/person/${ id }`;
 
       try {
@@ -50,7 +46,7 @@ const PatientRecord = () => {
 
   // Guard clauses to prevent rendering errors
   if (!record) {
-    return <Spinner loading={ loading } />; // Render a loading state while fetching
+    return <Spinner loading={ loading } />
   }
 
   const { vitalStatistics, name, age, gender, email, phone } = record;
@@ -59,27 +55,27 @@ const PatientRecord = () => {
     <main>
       <div className="container mx-auto p-6 flex flex-row justify-center items-start space-x-5">
         <div className="grid grid-cols-3 gap-4">
-          { Object.entries(vitalStatistics).map(([key, value]) => (
-            <div key={key} className="border-2 border-slate-950 rounded-md p-5">
-              <GaugeComponent uom={key} value={value} />
+
+          {  
+          Object.entries(vitalStatistics).map(([key, value]) => (
+            <div key={ key } className="border-2 border-slate-950 rounded-md p-5">
+              <GaugeComponent uom={ key } value={ value } />
             </div>
-          )) }
+          )) 
+          }
+
         </div>
 
         <div className='flex flex-col space-y-5'>
           <PersonDetails
-            name={name}
-            age={age}
-            gender={gender}
-            email={email}
-            phone={phone}
+            name={ name } 
+            age={ age }
+            gender={ gender }
+            email={ email }
+            phone={ phone }
           >
-            <PredictionButton onClick={ handleShowResultClick } />
+            <PredictionButton />
           </PersonDetails>
-
-          {
-            showResult ? <PredictionResult /> : ''
-          }
 
         </div>
       </div>

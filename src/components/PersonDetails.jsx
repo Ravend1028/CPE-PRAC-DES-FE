@@ -12,7 +12,7 @@ const PersonDetails = ({ name, age, gender, email, phone, children }) => {
         </h4>
 
         <h5 className='italic'>
-          { age } Years Old, { gender }
+          { age } years old, { gender }
         </h5>
 
         <h6 className='italic'>

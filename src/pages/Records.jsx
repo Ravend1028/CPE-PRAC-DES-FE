@@ -71,7 +71,7 @@ const Records = () => {
               <td className="border-r border-slate-950 p-2 text-center">{ record.phone }</td>
               <td className="border-r border-slate-950 p-2 text-center">{ record.email }</td>
               <td className="border-r border-slate-950 p-2 flex justify-center space-x-3">
-                <button className='bg-slate-950 text-gray-200 rounded-md p-3'>
+                <button className='bg-gray-950 text-gray-200 rounded-md p-3'>
                   <MdModeEdit />
                 </button>
 

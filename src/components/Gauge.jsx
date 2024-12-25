@@ -1,6 +1,6 @@
 import React from 'react';
 import { Gauge } from 'react-circular-gauge';
-import chroma from 'chroma-js'
+import chroma from 'chroma-js';
 
 const GaugeComponent = ({ value, uom }) => {
   return (
