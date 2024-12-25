@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-const PredictionButton = ({ style = 'bg-slate-950 rounded-md text-gray-200 p-2 text-md hover:text-amber-500', onClick }) => {
+const PredictionButton = ({ style = 'border-2 border-amber-600 rounded-md p-3 text-gray-950 hover:bg-amber-500 hover:text-white hover:border-amber-500', eventHandler }) => {
   return (
     <div className='container mx-auto flex justify-center'>
-      <button className = { style } onClick={ onClick }>
+      <button className = { style } onClick={ eventHandler }>
         Vital Statistics Prediction 
       </button>
     </div>
