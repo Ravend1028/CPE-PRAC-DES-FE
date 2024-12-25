@@ -52,6 +52,7 @@ const Records = () => {
       } else {
         alert('Failed to delete record.');
       }
+      
     } catch (error) {
       console.error('Error:', error);
       alert('An error occurred while deleting the record.');

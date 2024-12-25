@@ -8,8 +8,8 @@ const Header = () => {
   const classLink = ({ isActive }) => isActive ? 'text-amber-600' : '';
 
   return (
-    <header className='bg-slate-900 text-white'>
-      <div className='container mx-auto p-6 flex justify-between items-center font-poppins border-b border-slate-300'>
+    <header className='bg-gray-950 text-white'>
+      <div className='container mx-auto p-6 flex justify-between items-center font-poppins border-b border-amber-600'>
         <div className="space-x-2 flex flex-row justify-center items-center">
           <Link to = "/"><img src={ logo } alt="cdm-logo" className='w-20'/></Link>
           <h3 className='font-bold text-lg uppercase'>CpE Practice and Design 1</h3>

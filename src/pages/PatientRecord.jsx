@@ -81,7 +81,6 @@ const PatientRecord = () => {
             showResult ? <PredictionResult /> : ''
           }
 
-          
         </div>
       </div>
     </main>
