@@ -4,7 +4,6 @@ import { useParams } from 'react-router';
 import GaugeComponent from '../components/Gauge';
 import Spinner from '../components/Spinner';
 import PersonDetails from '../components/PersonDetails';
-import PredictionResult from '../components/PredictionResult';
 import PredictionButton from '../components/PredictionButton';
 
 const PatientRecord = () => {

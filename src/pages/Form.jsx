@@ -3,7 +3,11 @@ import { useState } from 'react';
 import Spinner from '../components/Spinner';
 import { Link } from 'react-router';
 
-// To be worked on soon
+// To be worked on soon,
+// Flow will be as follow:
+// After hitting this uri endpoint
+// it is the only time board will work to process data
+// and send it via websockets or http reqs
 
 const Form = () => {
   const [loading, setLoading] = useState(true);
@@ -15,7 +19,7 @@ const Form = () => {
           <Spinner loading = { loading } />
         </Link>
 
-        <h3 className='font-bold text-3xl uppercase'>
+        <h3 className='font-bold text-3xl uppercase text-gray-950'>
           Processing Data From Raspberry Pi Using WebSockets ...
         </h3>
       </div>

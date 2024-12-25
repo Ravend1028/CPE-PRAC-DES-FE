@@ -12,7 +12,7 @@ const Header = () => {
       <div className='container mx-auto p-6 flex justify-between items-center font-poppins border-b border-amber-600'>
         <div className="space-x-2 flex flex-row justify-center items-center">
           <Link to = "/"><img src={ logo } alt="cdm-logo" className='w-20'/></Link>
-          <h3 className='font-bold text-lg uppercase'>CpE Practice and Design 1</h3>
+          <h3 className='font-bold text-lg uppercase'>CpE Practice and Design</h3>
         </div>
 
         <div className="nav-menu flex justify-center items-center space-x-10 font-bold uppercase text-lg">
