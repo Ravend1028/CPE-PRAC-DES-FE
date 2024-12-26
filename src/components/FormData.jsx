@@ -1,9 +1,8 @@
 import React from 'react';
 import PredictionButton from './PredictionButton';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const FormData = () => {
-  // Form Fields State
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [gender, setGender] = useState('');
@@ -19,7 +18,7 @@ const FormData = () => {
   const [bodyTemperature, setBodyTemperature] = useState('');
   const [waistCircumference, setWaistCircumference] = useState('');
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     const PersonData = {
@@ -42,8 +41,42 @@ const FormData = () => {
       }
     }
 
-    // Can Do Api Req Here
-    // Actually, Do Fetch here 
+    try {
+      const url = "http://localhost:3000/person";
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(PersonData),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+  
+      alert("Record saved successfully");
+
+      // Clear the fields after successful submission
+      setName("");
+      setAge("");
+      setGender("");
+      setEmail("");
+      setPhone("");
+      setHeight("");
+      setWeight("");
+      setBMI("");
+      setPulseRate("");
+      setBloodOxygenLevel("");
+      setBloodPressure("");
+      setRespiratoryRate("");
+      setBodyTemperature("");
+      setWaistCircumference("");
+
+    } catch (error) {
+      console.error("Error saving record:", error.message);
+    }
   }
 
   return (

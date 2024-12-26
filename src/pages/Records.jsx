@@ -49,8 +49,6 @@ const Records = () => {
 
       if (response.ok) {
         alert('Record deleted successfully!');
-      } else {
-        alert('Failed to delete record.');
       }
       
     } catch (error) {

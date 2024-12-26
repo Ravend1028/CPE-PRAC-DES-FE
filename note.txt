@@ -13,4 +13,16 @@ Tech I Used:
 
 TO DO:
 
-- Form Actions (CRUD OPERATIONS)
+- Field Validations in Readings:
+  Empty Field
+  NaN Values
+  Long Strings, White Spaces
+  XSS
+  etc.
+- WebSockets and Board Processing -- Connectivity
+- Edit Button in Records (Should be in Modal)
+- Gauges Display (UI)
+
+- Machine Learning and Backend Things
+
+
