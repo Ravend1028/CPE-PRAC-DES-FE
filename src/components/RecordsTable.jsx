@@ -4,7 +4,7 @@ const RecordsTable = ({ children }) => {
   return (
     <section>
       <table className='table-auto border border-gray-950 font-poppins text-gray-950 w-[1400px]'>
-        <caption class="caption-top font-bold text-3xl mb-5">
+        <caption className="caption-top font-bold text-3xl mb-5">
           RECORDS
         </caption>
 

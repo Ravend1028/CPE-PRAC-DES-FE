@@ -14,7 +14,7 @@
         "pulseRate": "111",
         "bloodPressure": "111",
         "respiratoryRate": "111",
-        "bloodOxigenLevel": "111",
+        "bloodOxygenLevel": "111",
         "BMI": "111",
         "waistCircumference": "111"
       }
@@ -33,7 +33,7 @@
         "pulseRate": "222",
         "bloodPressure": "222",
         "respiratoryRate": "222",
-        "bloodOxigenLevel": "222",
+        "bloodOxygenLevel": "222",
         "BMI": "222",
         "waistCircumference": "222"
       }
@@ -52,7 +52,7 @@
         "pulseRate": "333",
         "bloodPressure": "333",
         "respiratoryRate": "333",
-        "bloodOxigenLevel": "333",
+        "bloodOxygenLevel": "333",
         "BMI": "333",
         "waistCircumference": "333"
       }
