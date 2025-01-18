@@ -57,8 +57,10 @@ const Records = () => {
     }
   }
 
+  // Add form event handler upon submission
+
   return (
-    <main>
+    <main className='relative flex justify-center items-center'>
       <div className="container mx-auto p-6 flex justify-center items-center">
         <RecordsTable>
           { records.map((record) => (
@@ -83,6 +85,20 @@ const Records = () => {
             </tr>
           )) }
         </RecordsTable>
+      </div>
+
+      <div className="container mx-auto p-6 absolute z-10 bg-gray-950 text-white w-1/2 rounded-md">
+        {/* Insert form here / form layout */}
+        {/* Name | Age | Gender | Email | Phone */}
+        
+        <form>
+          <label htmlFor="">
+
+          </label>
+          <input type="text" />
+        </form>
+
+
       </div>
     </main>
   )
