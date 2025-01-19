@@ -5,24 +5,29 @@ Tech I Used:
 - React JS
 - Tailwind CSS
 - JSON-Server 
-- Chart JS 
-- React Chart JS 2 
 - React Router
 - React Spinners
 - React Icons
+- React Circular Gauge
 
-TO DO:
+** BACKEND
 
-- Field Validations in Readings:
+- To Follow
+
+TO-DOs:
+
+- Field Validations in Readings: (Client Side /  Server Side)
   Empty Field
   NaN Values
   Long Strings, White Spaces
   XSS
   etc.
-- WebSockets and Board Processing -- Connectivity
-- Edit Button in Records (Should be in Modal)
-- Gauges Display (UI)
 
-- Machine Learning and Backend Things
+- WebSockets and Board Processing -- Connectivity (Logic / Networking Concept)
+- Edit Button in Records (Should be in Modal / In Progress)
+- Gauges Display (UI / To Read Docs)
+- Dependencies Cleaning
+
+- Machine Learning and Backend Things (Soon)
 
 
