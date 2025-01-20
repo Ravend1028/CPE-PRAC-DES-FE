@@ -1,15 +1,16 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { MdModeEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
-import RecordsTable from '../components/RecordsTable';
 import { useNavigate } from 'react-router';
+import RecordsTable from '../components/RecordsTable';
 
 const Records = () => {
 
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const modal = useRef(null);
 
   useEffect( () => {
     const fetchRecords = async () => {
@@ -65,6 +66,15 @@ const Records = () => {
 
   // Add form event handler upon submission
 
+  const handleModalToggle = (id) => {
+    console.log(modal);
+  
+    if (modal.current.classList.contains('hidden')) {
+      modal.current.classList.remove('hidden');
+    }
+
+  }
+
   return (
     <main className='relative flex justify-center items-center'>
       <div className="container mx-auto p-6 flex justify-center items-center">
@@ -78,7 +88,10 @@ const Records = () => {
               <td className="border-r border-slate-950 p-2 text-center">{ record.email }</td>
               <td className="border-r border-slate-950 p-2 flex justify-center space-x-3">
                 <button className='bg-gray-950 text-gray-200 rounded-md p-3'>
-                  <MdModeEdit />
+                  <MdModeEdit onClick={ (e) => {
+                    e.stopPropagation();
+                    handleModalToggle( record.id );
+                  } } />
                 </button>
 
                 <button className='bg-red-800 text-gray-200 rounded-md p-3'>
@@ -93,24 +106,51 @@ const Records = () => {
         </RecordsTable>
       </div>
 
-      <div className="container mx-auto p-6 absolute z-10 bg-gray-950 text-white w-1/2 rounded-md">
+      <div ref={ modal } className="container mx-auto p-6 absolute z-10 text-white w-1/2 rounded-md bg-gray-950 hidden">
         {/* Insert form here / form layout */}
-        {/* Name | Age | Gender | Email | Phone */}
-        {/* Note that it should be hidden initially as it is a modal */}
 
         {/* <h3>
           Edit Record For 
         </h3> */}
         
-        <form onSubmit={''}>
+        {/* Should i make each input as react components ?
+            Too avoid repetition and produce much cleaner code --
+        */}
+        <form className='flex flex-col justify-center items-center space-y-2 w-full'>
           <div className="flex flex-col space-y-2">
             <label className='font-bold uppercase' htmlFor="name">
               Name:
             </label>
-            <input className='border-x-2 border-gray-950 rounded-md p-2' type="text" name='name' value={''} onChange={''} />
+            <input className='border-x-2 border-amber-500 rounded-md p-2' type="text" name='name' value={''} onChange={''} />
           </div>
 
-          
+          <div className="flex flex-col space-y-2">
+            <label className='font-bold uppercase' htmlFor="age">
+              Age:
+            </label>
+            <input className='border-x-2 border-amber-500 rounded-md p-2' type="text" name='age' value={''} onChange={''} />
+          </div>
+
+          <div className="flex flex-col space-y-2">
+            <label className='font-bold uppercase' htmlFor="gender">
+              Gender:
+            </label>
+            <input className='border-x-2 border-amber-500 rounded-md p-2' type="text" name='gender' value={''} onChange={''} />
+          </div>
+
+          <div className="flex flex-col space-y-2">
+            <label className='font-bold uppercase' htmlFor="email">
+              Email:
+            </label>
+            <input className='border-x-2 border-amber-500 rounded-md p-2' type="text" name='email' value={''} onChange={''} />
+          </div>
+
+          <div className="flex flex-col space-y-2">
+            <label className='font-bold uppercase' htmlFor="phone">
+              Phone:
+            </label>
+            <input className='border-x-2 border-amber-500 rounded-md p-2' type="text" name='phone' value={''} onChange={''} />
+          </div>
         </form>
 
       </div>
