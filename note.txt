@@ -8,11 +8,21 @@ Tech I Used:
 - React Router
 - React Spinners
 - React Icons
-- React Circular Gauge
+
+- React Circular Gauge // Should switch to syncfusion/react circular gauge as the current gauging used as of now isnt maintained
 
 ** BACKEND
 
 - To Follow
+- Mostly Node + Django ??
+- Mongo DB for DB 
+- AWS for deployment
+- Can do Laravel for fallback
+
+** ARCHITECTURE / SYS. DES.
+
+- Microservices Type Archi.
+- If Time Constraint is prob. then Monolithic 
 
 TO-DOs:
 
@@ -26,7 +36,7 @@ TO-DOs:
 - WebSockets and Board Processing -- Connectivity (Logic / Networking Concept)
 - Edit Button in Records (Should be in Modal / In Progress)
 - Gauges Display (UI / To Read Docs)
-- Dependencies Cleaning
+- Dependencies Cleaning / Removal of unused dependency (Using npm uninstall)
 
 - Machine Learning and Backend Things (Soon)
 

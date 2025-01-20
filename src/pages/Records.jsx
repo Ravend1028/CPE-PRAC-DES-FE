@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router';
 const Records = () => {
 
   const [records, setRecords] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect( () => {
@@ -25,6 +26,7 @@ const Records = () => {
     
         const json = await response.json();
         setRecords(json);
+        setLoading(false);
 
       } catch (error) {
         console.error(error.message);
@@ -55,6 +57,10 @@ const Records = () => {
       console.error('Error:', error);
       alert('An error occurred while deleting the record.');
     }
+  }
+
+  if (!records) {
+    return <Spinner loading={ loading } />
   }
 
   // Add form event handler upon submission
@@ -90,16 +96,25 @@ const Records = () => {
       <div className="container mx-auto p-6 absolute z-10 bg-gray-950 text-white w-1/2 rounded-md">
         {/* Insert form here / form layout */}
         {/* Name | Age | Gender | Email | Phone */}
-        
-        <form>
-          <label htmlFor="">
+        {/* Note that it should be hidden initially as it is a modal */}
 
-          </label>
-          <input type="text" />
+        {/* <h3>
+          Edit Record For 
+        </h3> */}
+        
+        <form onSubmit={''}>
+          <div className="flex flex-col space-y-2">
+            <label className='font-bold uppercase' htmlFor="name">
+              Name:
+            </label>
+            <input className='border-x-2 border-gray-950 rounded-md p-2' type="text" name='name' value={''} onChange={''} />
+          </div>
+
+          
         </form>
 
-
       </div>
+
     </main>
   )
 }
