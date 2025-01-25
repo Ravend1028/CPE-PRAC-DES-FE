@@ -106,16 +106,8 @@ const Records = () => {
         </RecordsTable>
       </div>
 
-      <div ref={ modal } className="container mx-auto p-6 absolute z-10 text-white w-1/2 rounded-md bg-gray-950 hidden">
-        {/* Insert form here / form layout */}
-
-        {/* <h3>
-          Edit Record For 
-        </h3> */}
+      <div ref={ modal } className="container mx-auto p-6 absolute z-10 text-white w-1/3 rounded-md bg-gray-950 hidden">
         
-        {/* Should i make each input as react components ?
-            Too avoid repetition and produce much cleaner code --
-        */}
         <form className='flex flex-col justify-center items-center space-y-2 w-full'>
           <div className="flex flex-col space-y-2">
             <label className='font-bold uppercase' htmlFor="name">
@@ -151,6 +143,9 @@ const Records = () => {
             </label>
             <input className='border-x-2 border-amber-500 rounded-md p-2' type="text" name='phone' value={''} onChange={''} />
           </div>
+
+          {/* Button for cancelling the record edit / toggle modal hidden attribute */}
+          <input className='mt-8 p-2 rounded-md bg-amber-500 w-1/2' type="submit" />
         </form>
 
       </div>
