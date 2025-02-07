@@ -21,9 +21,15 @@ Tech I Used:
 ** ARCHITECTURE / SYS. DES.
 
 - Microservices Type Archi.
-- If Time Constraint is prob. then Monolithic 
+- If Time Constraint is prob. then stick to Monolithic 
 
 TO-DOs:
+
+// Urgent:
+- Login 
+- Signup
+- Forgot Pass
+- Jwt / Oauth
 
 - Field Validations in Readings: (Client Side /  Server Side)
   Empty Field
@@ -31,7 +37,6 @@ TO-DOs:
   Long Strings, White Spaces
   XSS
   etc.
-
 - WebSockets and Board Processing -- Connectivity (Logic / Networking Concept)
 - Edit Button in Records (Should be in Modal / In Progress)
 - Gauges Display (UI / To Read Docs)

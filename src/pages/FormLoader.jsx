@@ -5,7 +5,7 @@ import Spinner from '../components/Spinner';
 
 // To be worked on soon,
 // Flow will be as follow:
-// After hitting this uri endpoint
+// After hitting this url endpoint
 // it is the only time board will work to process data
 // and send it via websockets or http reqs
 
@@ -15,7 +15,7 @@ const Form = () => {
   return (
     <main>
       <div className="container mx-auto p-6 flex flex-col justify-center items-center font-poppins">
-        <Link to = {'/form/readings'}>
+        <Link to = {'/form-loader/readings'}>
           <Spinner loading = { loading } />
         </Link>
 

@@ -7,7 +7,7 @@ import {
  } from 'react-router';
  import Main from './layouts/Main';
  import Home from './pages/Home';
- import Form from './pages/Form';
+ import Form from './pages/FormLoader';
  import Records from './pages/Records'
  import PatientRecord from './pages/PatientRecord';
  import Readings from './pages/Readings';
@@ -19,8 +19,8 @@ const App = () => {
         <Route index element = { <Home/>} />
   
         <Route path = '/' element = { <Main/> }>
-          <Route path = '/form' element = { <Form/> }/>
-          <Route path = '/form/readings' element = { <Readings/> }/>
+          <Route path = '/form-loader' element = { <Form/> }/>
+          <Route path = '/form-loader/readings' element = { <Readings/> }/>
           <Route path = '/records' element = { <Records/> }/>
           <Route path = '/records/:id' element = { <PatientRecord/> }/>
         </Route>

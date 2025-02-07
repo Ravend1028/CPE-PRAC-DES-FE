@@ -10,7 +10,6 @@ const Hero = ({ children }) => {
 
         <div className='absolute top-0 left-0 w-full h-full overflow-hidden '>
           <img className='rounded-md object-cover w-full' src={ HealthCenter } alt="buli-health-center" /> 
-
           <div className="absolute inset-0 bg-black bg-opacity-70 pointer-events-none"></div> 
         </div>
 
