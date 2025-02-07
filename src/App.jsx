@@ -5,14 +5,16 @@ import {
   createRoutesFromElements,
   RouterProvider
  } from 'react-router';
- import Main from './layouts/Main';
- import Home from './pages/Home';
- import Form from './pages/FormLoader';
- import Records from './pages/Records'
- import PatientRecord from './pages/PatientRecord';
- import Readings from './pages/Readings';
- import Login from './pages/Login';
- import AuthLayout from './layouts/AuthLayout';
+import Main from './layouts/Main';
+import Home from './pages/Home';
+import Form from './pages/FormLoader';
+import Records from './pages/Records'
+import PatientRecord from './pages/PatientRecord';
+import Readings from './pages/Readings';
+import AuthLayout from './layouts/AuthLayout';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import ForgotPass from './pages/ForgotPass';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -20,8 +22,10 @@ const App = () => {
       <>
         <Route index element = { <Home/>} />
         
-        <Route path = '/' element = { <AuthLayout /> }>
-          <Route path='/login' element = { <Login/>} />
+        <Route path = '/' element = { <AuthLayout/> }>
+          <Route path='/login' element = { <Login/> } />
+          <Route path='/signup' element = { <Signup/> } />
+          <Route path='/forgot-password' element = { <ForgotPass/> } />
         </Route>
   
         <Route path = '/' element = { <Main/> }>
