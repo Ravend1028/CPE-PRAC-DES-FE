@@ -11,12 +11,18 @@ import {
  import Records from './pages/Records'
  import PatientRecord from './pages/PatientRecord';
  import Readings from './pages/Readings';
+ import Login from './pages/Login';
+ import AuthLayout from './layouts/AuthLayout';
 
 const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
         <Route index element = { <Home/>} />
+        
+        <Route path = '/' element = { <AuthLayout /> }>
+          <Route path='/login' element = { <Login/>} />
+        </Route>
   
         <Route path = '/' element = { <Main/> }>
           <Route path = '/form-loader' element = { <Form/> }/>

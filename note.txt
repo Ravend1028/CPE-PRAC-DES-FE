@@ -26,11 +26,12 @@ Tech I Used:
 TO-DOs:
 
 // Urgent:
-- Login 
+- Login (/)
 - Signup
 - Forgot Pass
 - Jwt / Oauth
 
+// By March:
 - Field Validations in Readings: (Client Side /  Server Side)
   Empty Field
   NaN Values
