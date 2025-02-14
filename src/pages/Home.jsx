@@ -21,7 +21,7 @@ const Home = () => {
           </Link>
         </div>
 
-        <Link to="/forgot-pass">
+        <Link to="/forgot-password">
           <button className='p-3 rounded-md text-xl underline hover:text-amber-500'>
             Forgot Password
           </button>

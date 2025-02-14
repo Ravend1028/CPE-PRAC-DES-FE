@@ -12,8 +12,10 @@ Tech I Used:
 
 ** BACKEND
 
+- Node JS
+
 - To Follow
-- Mostly Node + Django ??
+- Mostly Node/Express + Django ??
 - Mongo DB for DB 
 - AWS for deployment
 - Can do Laravel for fallback
@@ -27,9 +29,16 @@ TO-DOs:
 
 // Urgent:
 - Login (/)
-- Signup
-- Forgot Pass
+- Signup (/)
+- Forgot Pass (/)
 - Jwt / Oauth
+
+// Study:
+- Mongo DB (near)
+- MVC in Node JS
+- Express JS
+- API Crud Tutorial (Express / Node)
+- Auth / JWT
 
 // By March:
 - Field Validations in Readings: (Client Side /  Server Side)
