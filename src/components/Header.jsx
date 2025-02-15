@@ -3,6 +3,8 @@ import logo from '../../public/cdm-logo.png';
 import { Link } from 'react-router';
 import { NavLink } from 'react-router';
 
+// Add a navlink to Profile Dashboard, Proceed to Reading and Logout
+
 const Header = () => {
 
   const classLink = ({ isActive }) => isActive ? 'text-amber-600' : '';

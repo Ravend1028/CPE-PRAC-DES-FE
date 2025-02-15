@@ -2,8 +2,8 @@ import React from 'react';
 import { Gauge } from 'react-circular-gauge';
 import chroma from 'chroma-js';
 
-// Should refer to documentation regarding these properties
-// To manipulate properly (Calibrating Gauge Color is hard :<)
+// you should refer to documentation regarding these properties
+// to manipulate properly
 
 const GaugeComponent = ({ value, uom }) => {
   return (

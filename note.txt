@@ -8,21 +8,23 @@ Tech I Used:
 - React Router
 - React Spinners
 - React Icons
-- React Circular Gauge // Should switch to syncfusion/react circular gauge as the current gauging used as of now isnt maintained
+
+- React Circular Gauge // Should switch to Syncfusion/react circular gauge as the current gauging used as of now isnt maintained
 
 ** BACKEND
 
 - Node JS
+- MongoDB
 
 - To Follow
 - Mostly Node/Express + Django ??
-- Mongo DB for DB 
 - AWS for deployment
 - Can do Laravel for fallback
 
 ** ARCHITECTURE / SYS. DES.
 
 - Microservices Type Archi.
+- Use Docker if time is not a problem
 - If Time Constraint is prob. then stick to Monolithic 
 
 TO-DOs:
@@ -34,6 +36,7 @@ TO-DOs:
 - Jwt / Oauth
 
 // Study:
+- Node JS / Including APIs (/)
 - Mongo DB (near)
 - MVC in Node JS
 - Express JS
