@@ -37,11 +37,11 @@ TO-DOs:
 
 // Study:
 - Node JS / Including APIs (/)
-- Mongo DB (near)
-- MVC in Node JS
+- Mongo DB (/)
 - Express JS
 - API Crud Tutorial (Express / Node)
 - Auth / JWT
+- MVC in Node JS
 
 // By March:
 - Field Validations in Readings: (Client Side /  Server Side)
