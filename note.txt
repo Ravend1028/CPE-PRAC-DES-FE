@@ -14,34 +14,17 @@ Tech I Used:
 ** BACKEND
 
 - Node JS
+- Express JS
 - MongoDB
-
-- To Follow
-- Mostly Node/Express + Django ??
-- AWS for deployment
-- Can do Laravel for fallback
-
-** ARCHITECTURE / SYS. DES.
-
-- Microservices Type Archi.
-- Use Docker if time is not a problem
-- If Time Constraint is prob. then stick to Monolithic 
-
-TO-DOs:
-
-// Urgent:
-- Login (/)
-- Signup (/)
-- Forgot Pass (/)
-- Jwt / Oauth
 
 // Study:
 - Node JS / Including APIs (/)
 - Mongo DB (/)
-- Express JS
-- API Crud Tutorial (Express / Node)
+- Express JS (/)
+- API Crud Tutorial (Express / Node) (/)
 - Auth / JWT
-- MVC in Node JS
+- CRUD in MERN
+- MVC in Node/Express JS
 
 // By March:
 - Field Validations in Readings: (Client Side /  Server Side)
