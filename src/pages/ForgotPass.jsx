@@ -7,10 +7,10 @@ const ForgotPass = () => {
   const [retypePassword, setRetypePassword] = useState('');
 
   return (
-    <main>
+    <main className='bg-gray-950'>
       <div className="container mx-auto p-6 flex justify-center items-center h-[100vh]">
 
-        <form className='flex flex-col space-y-5 w-1/4 p-5 rounded-md border-2 border-gray-950'>
+        <form className='flex flex-col space-y-5 w-1/4 p-5 rounded-md border-2 border-gray-950 text-white'>
           <h3 className='uppercase font-bold text-center text-2xl mb-5'>
             Forgot Password
           </h3>

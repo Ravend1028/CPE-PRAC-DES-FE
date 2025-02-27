@@ -23,8 +23,8 @@ Tech I Used:
 - Express JS (/)
 - API Crud Tutorial (Express / Node) (/)
 - Auth / JWT
-- CRUD in MERN
-- MVC in Node/Express JS
+- CRUD in MERN (/)
+- MVC in Node/Express JS (/)
 
 // By March:
 - Field Validations in Readings: (Client Side /  Server Side)
@@ -38,5 +38,10 @@ Tech I Used:
 - Gauges Display (UI / To Read Docs)
 
 - Machine Learning and Backend Things (Soon)
+
+
+// signup button and hover in supp link 
+// bg transparent of signup 
+// focus ring 
 
 
