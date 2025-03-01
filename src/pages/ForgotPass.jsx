@@ -17,24 +17,24 @@ const ForgotPass = () => {
 
           <div className="flex flex-col justify-center space-y-2">
             <label className='font-bold uppercase' htmlFor="username">Username: </label>
-            <input className='border-x-2 border-gray-950 rounded-md p-2' type="text" name='username' value={ username } placeholder='Enter your username' onChange={(e) => {setUsername(e.target.value)}}/>
+            <input className='bg-transparent border-b-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none' type="text" name='username' value={ username } placeholder='Enter your username' onChange={(e) => {setUsername(e.target.value)}}/>
           </div>
 
           <div className="flex flex-col justify-center space-y-2">
             <label className='font-bold uppercase' htmlFor="new-password">New Password: </label>
-            <input className='border-x-2 border-gray-950 rounded-md p-2' type="password" name='new-password' value={ newPassword } placeholder='Enter your new password' onChange={(e) => {setNewPassword(e.target.value)}}/>
+            <input className='bg-transparent border-b-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none' type="password" name='new-password' value={ newPassword } placeholder='Enter your new password' onChange={(e) => {setNewPassword(e.target.value)}}/>
           </div>
 
           <div className="flex flex-col justify-center space-y-2">
             <label className='font-bold uppercase' htmlFor="retype-password">Retype Password: </label>
-            <input className='border-x-2 border-gray-950 rounded-md p-2' type="password" name='retype-password' value={ retypePassword } placeholder='Retype your new password' onChange={(e) => {setRetypePassword(e.target.value)}}/>
+            <input className='bg-transparent border-b-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none' type="password" name='retype-password' value={ retypePassword } placeholder='Retype your new password' onChange={(e) => {setRetypePassword(e.target.value)}}/>
           </div>
 
-          <button className='bg-gray-950 p-3 rounded-md text-white hover:bg-gray-800' type='submit'>
+          <button className='bg-amber-600 p-3 rounded-md text-white hover:bg-amber-500' type='submit'>
             Submit
           </button>
 
-          <button className='underline p-3 rounded-md text-gray-950 hover:text-gray-800'>
+          <button className='underline p-3 rounded-md text-white hover:text-amber-500'>
             Login
           </button>
         </form>
