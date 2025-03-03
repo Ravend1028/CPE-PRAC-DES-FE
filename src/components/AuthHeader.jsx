@@ -2,10 +2,13 @@ import React from 'react';
 import CDMLogo from '../../public/cdm-logo.png';
 import MuntiLogo from '../../public/munti-logo.png';
 import { Link } from 'react-router';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AuthHeader = () => {
   return (
     <header className="fixed top-0 left-0 w-full z-50 text-white">
+      <ToastContainer />
       <div className="container mx-auto flex justify-between items-center p-3">
         <div className='flex justify-center items-center space-x-5'>
           <img src={ CDMLogo } alt="cdm-logo" className='w-20' />

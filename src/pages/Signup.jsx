@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { Link } from 'react-router';  
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -9,12 +10,18 @@ const Signup = () => {
   const [phone, setPhone] = useState('');
   const [age, setAge] = useState('');
   const [gender, setGender] = useState('');
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    alert('Signup Test');
+  };
   
   return (
-    <main className='bg-gray-950'>
+    <main className='bg-gray-950 font-poppins'>
       <div className="container mx-auto p-6 flex justify-center items-center h-[100vh]">
 
-        <form className='flex flex-col space-y-5 w-1/3 p-5 rounded-md border-2 border-gray-950 text-white'>
+        <form className='flex flex-col space-y-5 w-1/3 p-5 rounded-md border-2 border-gray-950 text-white' onSubmit={ handleFormSubmit }>
           <h3 className='uppercase font-bold text-center text-2xl mb-5'>
             Sign up
           </h3>
@@ -63,12 +70,14 @@ const Signup = () => {
           </div>
 
           <button className='bg-amber-600 p-3 rounded-md text-white hover:bg-amber-500' type='submit'>
-            Signup
+            Sign Up
           </button>
 
-          <button className='underline p-3 rounded-md text-white hover:text-amber-500'>
-            Login
-          </button>
+          <Link to='/login' className='flex justify-center'>
+            <button className='underline p-3 rounded-md text-white hover:text-amber-500'>
+              Login
+            </button>
+          </Link>
         </form>
 
       </div>

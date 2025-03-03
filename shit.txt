@@ -1,0 +1,2 @@
+To Study:
+- Redux and Redux Toolkit

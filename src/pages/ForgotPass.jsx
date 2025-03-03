@@ -1,16 +1,23 @@
 import React from 'react';
 import { useState } from 'react';
+import { Link } from 'react-router';
 
 const ForgotPass = () => {
   const [username, setUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [retypePassword, setRetypePassword] = useState('');
 
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    alert('Forgot Pass Test');
+  };
+
   return (
-    <main className='bg-gray-950'>
+    <main className='bg-gray-950 font-poppins'>
       <div className="container mx-auto p-6 flex justify-center items-center h-[100vh]">
 
-        <form className='flex flex-col space-y-5 w-1/4 p-5 rounded-md border-2 border-gray-950 text-white'>
+        <form className='flex flex-col space-y-5 w-1/4 p-5 rounded-md border-2 border-gray-950 text-white' onSubmit={ handleFormSubmit }>
           <h3 className='uppercase font-bold text-center text-2xl mb-5'>
             Forgot Password
           </h3>
@@ -34,9 +41,11 @@ const ForgotPass = () => {
             Submit
           </button>
 
-          <button className='underline p-3 rounded-md text-white hover:text-amber-500'>
-            Login
-          </button>
+          <Link to='/signup' className='flex justify-center'>
+            <button className='underline p-3 rounded-md text-white hover:text-amber-500'>
+              Sign Up
+            </button>
+          </Link>
         </form>
 
       </div>
