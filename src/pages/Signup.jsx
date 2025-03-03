@@ -1,6 +1,9 @@
 import React from 'react';
-import { useState } from 'react';
-import { Link } from 'react-router';  
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router';  
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { useRegisterMutation } from '../slices/usersApiSlice';
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -11,10 +14,34 @@ const Signup = () => {
   const [age, setAge] = useState('');
   const [gender, setGender] = useState('');
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch(); // React Redux Hook
+
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const [register, { isLoading }] = useRegisterMutation();
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/dashboard');
+    } 
+  }, [navigate, userInfo]);
+  
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    alert('Signup Test');
+    // Validation Here
+    try {
+      const res = await register({ username, password, name: fullname, email, phone, age, gender }).unwrap();
+      toast.success('Account created successfully!');
+      // Delay navigation to allow the toast to be displayed
+      setTimeout(() => {
+        navigate('/');
+      }, 5000);
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
   };
   
   return (
@@ -35,7 +62,7 @@ const Signup = () => {
 
               <div className="flex flex-col justify-center space-y-2">
                 <label className='font-bold uppercase' htmlFor="fullname">Full name: </label>
-                <input className='bg-transparent border-b-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none' type="text" name='fullname' value={ fullname } placeholder='Enter your full name' onChange={(e) => {setFullname(e.target.value)}}/>
+                <input className='bg-transparent border-b-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none' type="text" name='name' value={ fullname } placeholder='Enter your full name' onChange={(e) => {setFullname(e.target.value)}}/>
               </div>
 
               <div className="flex flex-col justify-center space-y-2">
@@ -58,12 +85,22 @@ const Signup = () => {
               <div className="flex flex-row">
                 <div className="flex flex-col justify-center items-center space-y-2">
                   <label className='font-bold uppercase' htmlFor="age">Age: </label>
-                  <input className='bg-transparent border-b-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none w-1/2' type="text" name='age' value={ age } placeholder='Age' onChange={(e) => {setAge(e.target.value)}}/>
+                  <input className='bg-transparent border-b-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none w-1/3' type="text" name='age' value={ age } placeholder='Age' onChange={(e) => {setAge(e.target.value)}}/>
                 </div>
 
                 <div className="flex flex-col justify-center items-center space-y-2">
-                  <label className='font-bold uppercase' htmlFor="gender">Gender: </label>
-                  <input className='bg-transparent border-b-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none w-1/2' type="text" name='gender' value={ gender } placeholder='M/F' onChange={(e) => {setGender(e.target.value)}}/>
+                  <label className="font-bold uppercase" htmlFor="gender">Gender:</label>
+                  <select
+                    className={`bg-transparent border-b-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none w-3/4
+                      ${!gender ? 'text-gray-500' : 'text-white'}`} // Change color dynamically
+                    name="gender"
+                    value={ gender }
+                    onChange={(e) => setGender(e.target.value)}
+                  >
+                    <option value="" disabled hidden className="text-gray-500">M/F</option>
+                    <option value="Male" className="text-black">M</option>
+                    <option value="Female" className="text-black">F</option>
+                  </select>
                 </div>
               </div>
             </div> 

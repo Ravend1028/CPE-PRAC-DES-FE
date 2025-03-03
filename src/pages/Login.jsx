@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLoginMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
 import { toast } from 'react-toastify';
+import Spinner from '../components/Spinner';
 
 const Login = () => {
   const [username, setUsername] = useState('');
