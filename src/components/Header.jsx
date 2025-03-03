@@ -36,20 +36,14 @@ const Header = () => {
         </div>
 
         <div className='flex space-x-5 ml-20 pl-2'>
-          <NavLink to='/dashboard' className={ classLink }>
-            Profile
+          <NavLink to='/dashboard/profile' className={ classLink }>
+            { userInfo ? userInfo.name : 'Guest' }
           </NavLink>
 
           <NavLink to='/logout' className={ classLink } onClick={(e) => handleLogout(e)}>
             Logout
           </NavLink>
         </div>
-        {/* Options
-          - User Profile
-          - Logout
-
-          - Optional Edit
-        */}
       </div>
     </header>
   )
