@@ -7,9 +7,6 @@ import {
  } from 'react-router';
 import Main from './layouts/MainLayout';
 import Home from './pages/Home';
-import Form from './pages/FormLoader';
-import Records from './pages/Records'
-import PatientRecord from './pages/PatientRecord';
 import AuthLayout from './layouts/AuthLayout';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -30,14 +27,10 @@ const App = () => {
         </Route>
   
         {/* Private Routes */}
-        <Route path = '/' element = { <Main/> }>
-          <Route path = '/' element = { <PrivateRoute /> }> {/* This Checks if user loggedin */}
+        <Route path = '/' element = { <PrivateRoute /> }> {/* This Checks if user loggedin */}
+          <Route path = '/' element = { <Main/> }>
             <Route path = '/dashboard' element = { <Dashboard/> }/>
           </Route>
-
-          {/* if RBAC is added */}
-          {/* <Route path = '/records' element = { <Records/> }/>
-          <Route path = '/records/:id' element = { <PatientRecord/> }/> */}
         </Route>
       </>
     )

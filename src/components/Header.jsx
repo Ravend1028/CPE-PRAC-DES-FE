@@ -37,7 +37,7 @@ const Header = () => {
 
         <div className='flex space-x-5 ml-20 pl-2'>
           <NavLink to='/dashboard' className={ classLink }>
-            { userInfo ? userInfo.name : 'Guest' }
+            Profile
           </NavLink>
 
           <NavLink to='/settings' className={ classLink }>
