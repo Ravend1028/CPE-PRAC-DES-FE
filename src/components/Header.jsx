@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from '../../public/cdm-logo.png';
-import { Link, NavLink, useNavigate} from 'react-router';
+import { Link, NavLink, useNavigate } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLogoutMutation } from '../slices/usersApiSlice';
 import { logout } from '../slices/authSlice';

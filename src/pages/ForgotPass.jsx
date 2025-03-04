@@ -1,16 +1,37 @@
 import React from 'react';
-import { useState } from 'react';
-import { Link } from 'react-router';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router';
+import { useUpdateUserPasswordMutation } from '../slices/usersApiSlice';
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 const ForgotPass = () => {
   const [username, setUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [retypePassword, setRetypePassword] = useState('');
 
+  const navigate = useNavigate();
+  const [updatePassword, { isLoading }] = useUpdateUserPasswordMutation();
+  const { userInfo } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+      if (userInfo) {
+        navigate('/dashboard');
+      } 
+  }, [navigate, userInfo]);
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    alert('Forgot Pass Test');
+    try {
+      const res = await updatePassword({ username, password: newPassword, retypePassword }).unwrap();
+      toast.success('Password updated successfully');
+      setTimeout(() => {
+        navigate('/');
+      }, 5000);
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
   };
 
   return (
