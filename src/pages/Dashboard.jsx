@@ -28,7 +28,7 @@ const Dashboard = () => {
   const [updateProfile, { isLoading }] = useUpdateUserMutation();
 
   const { userInfo } = useSelector((state) => state.auth); // React Redux Hook
-  const { vitalStatistics } = userInfo;
+  // const { vitalStatistics } = userInfo;
 
   useEffect(() => {
     setName(userInfo.name);
@@ -36,30 +36,30 @@ const Dashboard = () => {
     setGender(userInfo.gender);
     setEmail(userInfo.email);
     setPhone(userInfo.phone);
-    setHeight(vitalStatistics.height);
-    setWeight(vitalStatistics.weight);
-    setBodyTemperature(vitalStatistics.bodyTemperature);
-    setPulseRate(vitalStatistics.pulseRate);
-    setBloodPressure(vitalStatistics.bloodPressure);
-    setRespiratoryRate(vitalStatistics.respiratoryRate);
-    setBloodOxygenLevel(vitalStatistics.bloodOxygenLevel);
-    setBMI(vitalStatistics.BMI);
-    setWaistCircumference(vitalStatistics.waistCircumference);
+    // setHeight(vitalStatistics.height);
+    // setWeight(vitalStatistics.weight);
+    // setBodyTemperature(vitalStatistics.bodyTemperature);
+    // setPulseRate(vitalStatistics.pulseRate);
+    // setBloodPressure(vitalStatistics.bloodPressure);
+    // setRespiratoryRate(vitalStatistics.respiratoryRate);
+    // setBloodOxygenLevel(vitalStatistics.bloodOxygenLevel);
+    // setBMI(vitalStatistics.BMI);
+    // setWaistCircumference(vitalStatistics.waistCircumference);
   }, [
     userInfo.name, 
     userInfo.age, 
     userInfo.gender, 
     userInfo.email, 
     userInfo.phone,
-    vitalStatistics.height,
-    vitalStatistics.weight,
-    vitalStatistics.bodyTemperature,
-    vitalStatistics.pulseRate,
-    vitalStatistics.bloodPressure,
-    vitalStatistics.respiratoryRate,
-    vitalStatistics.bloodOxygenLevel,
-    vitalStatistics.BMI,
-    vitalStatistics.waistCircumference
+    // vitalStatistics.height,
+    // vitalStatistics.weight,
+    // vitalStatistics.bodyTemperature,
+    // vitalStatistics.pulseRate,
+    // vitalStatistics.bloodPressure,
+    // vitalStatistics.respiratoryRate,
+    // vitalStatistics.bloodOxygenLevel,
+    // vitalStatistics.BMI,
+    // vitalStatistics.waistCircumference
   ]);
 
   // Modal Event Listener
@@ -98,9 +98,9 @@ const Dashboard = () => {
 
         <div className='grid grid-cols-3 gap-5 p-3'>
           { 
-            Object.entries(vitalStatistics).map(([key, value]) => (
-              <Gauge key={key} value={value} label={key} />
-            ))
+            // Object.entries(vitalStatistics).map(([key, value]) => (
+            //   <Gauge key={key} value={value} label={key} />
+            // ))
           }
 
           <div className='flex flex-row justify-center items-center space-x-5'>
