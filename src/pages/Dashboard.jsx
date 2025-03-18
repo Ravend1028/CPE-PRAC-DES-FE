@@ -8,6 +8,7 @@ import { MdEditSquare } from "react-icons/md";
 import Gauge from '../components/Gauge';
 
 const Dashboard = () => {
+  const [isVisible, setVisibility] = useState(false);
   // I should create a modal here to edit personal info but not readings
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
@@ -68,13 +69,28 @@ const Dashboard = () => {
 
     try {
       const res = await updateProfile({
-        test: 'Test' // consider sending here new data -- pass the new modal data
+        name,
+        age,
+        gender,
+        email,
+        phone
       }).unwrap();
       dispatch(setCredentials({ ...res }));
-      toast.success('Profile Updated');
-    } catch (error) {
-      toast.error(error?.data?.message || error.error);
+      toast.success('Profile Updated Successfully');
+      setVisibility(false);
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
     }
+  };  
+
+  // Function for toggling the modal
+  const handleToggleClick = () => {
+    setVisibility(true);
+  };
+
+  // Function for closing the modal
+  const handleCancelClick = () => {
+    setVisibility(false);
   };  
 
   return (
@@ -92,7 +108,7 @@ const Dashboard = () => {
           <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" readOnly value={ phone }/>
 
           {/* Should add event listener */}
-          <button className='p-3 rounded-md text-3xl hover:border-amber-500 hover:bg-amber-500'>
+          <button className='p-3 rounded-md text-3xl hover:border-amber-500 hover:bg-amber-500' onClick={ handleToggleClick }>
             <MdEditSquare />
           </button>
         </div>
@@ -117,33 +133,39 @@ const Dashboard = () => {
       </div>
 
       {/* Edit User Info Modal */}
-      <div className='absolute bg-gray-950 w-1/3 rounded-md flex flex-col justify-center items-center p-3 text-white space-y-5'>
-          <h3 className='font-bold text-xl uppercase'>
-            Edit User Info
-          </h3>
+      {
+        isVisible && (
+          <div className='absolute bg-gray-950 w-1/4 rounded-md p-3 text-white '>
+            <form className='flex flex-col justify-center items-center space-y-5' onSubmit={ handleFormSubmit }>
+              <h3 className='font-bold text-xl uppercase border-b-2 border-amber-600'>
+                Edit User Info
+              </h3>
 
-          <div className='flex flex-col justify-center items-center p-3 border-b-2 border-gray-950 space-y-5'>
-            <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ name }/>
+              <div className='flex flex-col justify-center items-center p-3 border-b-2 border-gray-950 space-y-5'>
+                <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ name } onChange={(e) => {setName(e.target.value)}}/>
 
-            <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ age }/>
+                <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ age } onChange={(e) => {setAge(e.target.value)}}/>
 
-            <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ gender }/>
+                <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ gender } onChange={(e) => {setGender(e.target.value)}}/>
 
-            <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ email }/>
+                <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center w-60' type="text" value={ email } onChange={(e) => {setEmail(e.target.value)}}/>
 
-            <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ phone }/>
+                <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ phone } onChange={(e) => {setPhone(e.target.value)}}/>
+              </div>
+              
+              <div className='flex flex-row justify-center items-center space-x-5'>
+                <button className='w-full bg-amber-600 p-2 rounded-md text-xl hover:bg-amber-500 hover:text-slate-950' type='submit'>
+                  Save
+                </button>
+
+                <button className='w-full p-2 rounded-md text-xl border-2 border-amber-600 hover:bg-amber-500 hover:text-slate-950 hover:border-amber-500' onClick={ handleCancelClick }>
+                  Cancel
+                </button>
+              </div>
+            </form>
           </div>
-          
-          <div className='flex flex-row justify-center items-center space-x-5'>
-            <button className='w-full bg-amber-600 p-2 rounded-md text-xl hover:bg-amber-500 hover:text-slate-950'>
-              Save
-            </button>
-
-            <button className='w-full p-2 rounded-md text-xl border-2 border-amber-600 hover:bg-amber-500 hover:text-slate-950 hover:border-amber-500'>
-              Cancel
-            </button>
-          </div>
-      </div>
+        )
+      }
     </main>
   )
 }
