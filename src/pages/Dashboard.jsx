@@ -28,7 +28,7 @@ const Dashboard = () => {
   const [updateProfile, { isLoading }] = useUpdateUserMutation();
 
   const { userInfo } = useSelector((state) => state.auth); // React Redux Hook
-  // const { vitalStatistics } = userInfo;
+  const { vitalStatistics } = userInfo;
 
   useEffect(() => {
     setName(userInfo.name);
@@ -36,30 +36,30 @@ const Dashboard = () => {
     setGender(userInfo.gender);
     setEmail(userInfo.email);
     setPhone(userInfo.phone);
-    // setHeight(vitalStatistics.height);
-    // setWeight(vitalStatistics.weight);
-    // setBodyTemperature(vitalStatistics.bodyTemperature);
-    // setPulseRate(vitalStatistics.pulseRate);
-    // setBloodPressure(vitalStatistics.bloodPressure);
-    // setRespiratoryRate(vitalStatistics.respiratoryRate);
-    // setBloodOxygenLevel(vitalStatistics.bloodOxygenLevel);
-    // setBMI(vitalStatistics.BMI);
-    // setWaistCircumference(vitalStatistics.waistCircumference);
+    setHeight(vitalStatistics.height);
+    setWeight(vitalStatistics.weight);
+    setBodyTemperature(vitalStatistics.bodyTemperature);
+    setPulseRate(vitalStatistics.pulseRate);
+    setBloodPressure(vitalStatistics.bloodPressure);
+    setRespiratoryRate(vitalStatistics.respiratoryRate);
+    setBloodOxygenLevel(vitalStatistics.bloodOxygenLevel);
+    setBMI(vitalStatistics.BMI);
+    setWaistCircumference(vitalStatistics.waistCircumference);
   }, [
     userInfo.name, 
     userInfo.age, 
     userInfo.gender, 
     userInfo.email, 
     userInfo.phone,
-    // vitalStatistics.height,
-    // vitalStatistics.weight,
-    // vitalStatistics.bodyTemperature,
-    // vitalStatistics.pulseRate,
-    // vitalStatistics.bloodPressure,
-    // vitalStatistics.respiratoryRate,
-    // vitalStatistics.bloodOxygenLevel,
-    // vitalStatistics.BMI,
-    // vitalStatistics.waistCircumference
+    vitalStatistics.height,
+    vitalStatistics.weight,
+    vitalStatistics.bodyTemperature,
+    vitalStatistics.pulseRate,
+    vitalStatistics.bloodPressure,
+    vitalStatistics.respiratoryRate,
+    vitalStatistics.bloodOxygenLevel,
+    vitalStatistics.BMI,
+    vitalStatistics.waistCircumference
   ]);
 
   // Modal Event Listener
@@ -78,7 +78,7 @@ const Dashboard = () => {
   };  
 
   return (
-    <main>
+    <main className='relative flex justify-center items-center'>
       <div className="container mx-auto p-6 flex flex-col font-poppins space-y-2">
         <div className='flex justify-center items-center p-3 border-b-2 border-gray-950 space-x-10'>
           <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" readOnly value={ name }/>
@@ -91,6 +91,7 @@ const Dashboard = () => {
 
           <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" readOnly value={ phone }/>
 
+          {/* Should add event listener */}
           <button className='p-3 rounded-md text-3xl hover:border-amber-500 hover:bg-amber-500'>
             <MdEditSquare />
           </button>
@@ -98,9 +99,9 @@ const Dashboard = () => {
 
         <div className='grid grid-cols-3 gap-5 p-3'>
           { 
-            // Object.entries(vitalStatistics).map(([key, value]) => (
-            //   <Gauge key={key} value={value} label={key} />
-            // ))
+            Object.entries(vitalStatistics).map(([key, value]) => (
+              <Gauge key={key} value={value} label={key} />
+            ))
           }
 
           <div className='flex flex-row justify-center items-center space-x-5'>
@@ -113,6 +114,35 @@ const Dashboard = () => {
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Edit User Info Modal */}
+      <div className='absolute bg-gray-950 w-1/3 rounded-md flex flex-col justify-center items-center p-3 text-white space-y-5'>
+          <h3 className='font-bold text-xl uppercase'>
+            Edit User Info
+          </h3>
+
+          <div className='flex flex-col justify-center items-center p-3 border-b-2 border-gray-950 space-y-5'>
+            <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ name }/>
+
+            <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ age }/>
+
+            <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ gender }/>
+
+            <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ email }/>
+
+            <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ phone }/>
+          </div>
+          
+          <div className='flex flex-row justify-center items-center space-x-5'>
+            <button className='w-full bg-amber-600 p-2 rounded-md text-xl hover:bg-amber-500 hover:text-slate-950'>
+              Save
+            </button>
+
+            <button className='w-full p-2 rounded-md text-xl border-2 border-amber-600 hover:bg-amber-500 hover:text-slate-950 hover:border-amber-500'>
+              Cancel
+            </button>
+          </div>
       </div>
     </main>
   )
