@@ -6,10 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useUpdateUserMutation } from '../slices/usersApiSlice';
 import { MdEditSquare } from "react-icons/md";
 import Gauge from '../components/Gauge';
+import Spinner from '../components/Spinner';
 
 const Dashboard = () => {
   const [isVisible, setVisibility] = useState(false);
   const modalRef = useRef(null);
+
+  const [isReading, setReading] = useState(false);
  
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
@@ -115,6 +118,16 @@ const Dashboard = () => {
       .replace(/^./, (str) => str.toUpperCase()); // Capitalize the first letter
   };
 
+  const getSensorReadings = () => {
+    // Connect to web socket server
+    // Listen for data and then set gauges value to received data
+    // Optimize logic for continuos readings
+
+    setReading(true);
+  };
+
+  // Add event listener for saving to mongodb
+
   return (
     <main className='relative flex justify-center items-center'>
       <div className="container mx-auto p-6 flex flex-col font-poppins space-y-2">
@@ -146,10 +159,29 @@ const Dashboard = () => {
               Predict Conditions
             </button>
 
-            <button className='w-full p-3 rounded-md text-xl border-2 border-amber-600 hover:bg-amber-500 hover:text-slate-950 hover:border-amber-500'>
-              Get Readings
-            </button>
+            { !isReading ? 
+                <button className='w-full p-3 rounded-md text-xl border-2 border-amber-600 hover:bg-amber-500 hover:text-slate-950 hover:border-amber-500'
+                 onClick={ getSensorReadings }>
+                  Get Readings
+                </button> 
+                : 
+                <button className='w-full p-3 rounded-md text-xl border-2 border-amber-600 hover:bg-amber-500 hover:text-slate-950 hover:border-amber-500'>
+                  Save Readings
+                </button> 
+            }
           </div>
+
+          {
+            isReading && (
+              <div className='flex flex-row justify-center items-center space-x-5'>
+                <div className='flex justify-center items-center w-full bg-red-300 p-3 rounded-md text-lg text-slate-950'>
+                  <Spinner />
+
+                  Reading Sensor Data Press `Save` to Stop
+                </div>
+              </div> 
+            )
+          }
         </div>
       </div>
 
