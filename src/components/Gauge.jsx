@@ -21,11 +21,15 @@ const Gauge = ({ value, label, height = 200}) => {
         dataLabels: {
           name: {
             show: true,
+            offsetY: 15, // Push the label below gauge
           },
           value: {
             show: true,
-            fontSize: '18px',
+            fontSize: '20px',
             fontWeight: 'bold',
+            formatter: function (val) {
+              return val; // Display the raw value instead of percentage
+            },
           },
         },
       },

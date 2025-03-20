@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react'; 
+import { useState, useEffect, useRef } from 'react'; 
 import { toast } from 'react-toastify';
 import { setCredentials } from '../slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +9,8 @@ import Gauge from '../components/Gauge';
 
 const Dashboard = () => {
   const [isVisible, setVisibility] = useState(false);
-  // I should create a modal here to edit personal info but not readings
+  const modalRef = useRef(null);
+ 
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [gender, setGender] = useState('');
@@ -28,10 +29,24 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const [updateProfile, { isLoading }] = useUpdateUserMutation();
 
-  const { userInfo } = useSelector((state) => state.auth); // React Redux Hook
+  const { userInfo } = useSelector((state) => state.auth); 
   const { vitalStatistics } = userInfo;
 
   useEffect(() => {
+    // const handleClickOutside = (event) => {
+    //   if (modalRef.current && !modalRef.current.contains(event.target)) {
+    //     setVisibility(false);
+    //   }
+    // };
+  
+    // if (isVisible) {
+    //   document.addEventListener("mousedown", handleClickOutside);
+    // }
+  
+    // return () => {
+    //   document.removeEventListener("mousedown", handleClickOutside);
+    // };
+
     setName(userInfo.name);
     setAge(userInfo.age);
     setGender(userInfo.gender);
@@ -60,7 +75,8 @@ const Dashboard = () => {
     vitalStatistics.respiratoryRate,
     vitalStatistics.bloodOxygenLevel,
     vitalStatistics.BMI,
-    vitalStatistics.waistCircumference
+    vitalStatistics.waistCircumference,
+    // isVisible
   ]);
 
   // Modal Event Listener
@@ -93,6 +109,12 @@ const Dashboard = () => {
     setVisibility(false);
   };  
 
+  const formatLabel = (key) => {
+    return key
+      .replace(/([a-z])([A-Z])/g, "$1 $2") // Insert space before uppercase letters
+      .replace(/^./, (str) => str.toUpperCase()); // Capitalize the first letter
+  };
+
   return (
     <main className='relative flex justify-center items-center'>
       <div className="container mx-auto p-6 flex flex-col font-poppins space-y-2">
@@ -107,7 +129,6 @@ const Dashboard = () => {
 
           <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" readOnly value={ phone }/>
 
-          {/* Should add event listener */}
           <button className='p-3 rounded-md text-3xl hover:border-amber-500 hover:bg-amber-500' onClick={ handleToggleClick }>
             <MdEditSquare />
           </button>
@@ -116,12 +137,12 @@ const Dashboard = () => {
         <div className='grid grid-cols-3 gap-5 p-3'>
           { 
             Object.entries(vitalStatistics).map(([key, value]) => (
-              <Gauge key={key} value={value} label={key} />
+              <Gauge key={key} value={value} label={formatLabel(key)} />
             ))
           }
 
           <div className='flex flex-row justify-center items-center space-x-5'>
-            <button className='w-full bg-amber-600 p-3 rounded-md text-xl hover:bg-amber-500 hover:text-slate-950'>
+            <button className='w-full bg-amber-600 p-3 rounded-md text-xl hover:bg-amber-500 hover:text-slate-950' onClick={ () => { alert(`Test`) } }>
               Predict Conditions
             </button>
 
@@ -132,17 +153,17 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Edit User Info Modal */}
+      {/* Edit User Info Modal -- Separate this into a stand alone component in revision time */}
       {
         isVisible && (
-          <div className='absolute bg-gray-950 w-1/4 rounded-md p-3 text-white '>
+          <div className='absolute bg-gray-950 w-1/4 rounded-md p-3 text-white'>
             <form className='flex flex-col justify-center items-center space-y-5' onSubmit={ handleFormSubmit }>
               <h3 className='font-bold text-xl uppercase border-b-2 border-amber-600'>
                 Edit User Info
               </h3>
 
               <div className='flex flex-col justify-center items-center p-3 border-b-2 border-gray-950 space-y-5'>
-                <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ name } onChange={(e) => {setName(e.target.value)}}/>
+                <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ name } onChange={(e) => {setName(e.target.value)}}  ref={ modalRef }/>
 
                 <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ age } onChange={(e) => {setAge(e.target.value)}}/>
 
