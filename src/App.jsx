@@ -13,6 +13,7 @@ import Signup from './pages/Signup';
 import ForgotPass from './pages/ForgotPass';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
+import Settings from './pages/Settings';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -30,6 +31,7 @@ const App = () => {
         <Route path = '/' element = { <PrivateRoute /> }> {/* This Checks if user loggedin */}
           <Route path = '/' element = { <Main/> }>
             <Route path = '/dashboard' element = { <Dashboard/> }/>
+            <Route path = '/settings' element = { <Settings/> }/>
           </Route>
         </Route>
       </>
