@@ -5,9 +5,9 @@ const Settings = () => {
     <main className='font-poppins'>
       <div className="container mx-auto p-6">
         {/* Form style here */}
-        <h3>
-          This page is for editing user login credential details
-        </h3>
+        <form>
+          {/* Add details here */}
+        </form>
       </div>
     </main>
   )
