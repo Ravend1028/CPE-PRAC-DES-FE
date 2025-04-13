@@ -127,6 +127,14 @@ const Dashboard = () => {
   };
 
   // Add event listener for saving to mongodb
+  const handleSavingOfReadings = () => {
+    // API call to backend readings
+    try {
+      setReading(false);
+    } catch (error) {
+      
+    }
+  }
 
   return (
     <main className='relative flex justify-center items-center'>
@@ -150,11 +158,11 @@ const Dashboard = () => {
         <div className='grid grid-cols-3 gap-5 p-3'>
           { 
             Object.entries(vitalStatistics).map(([key, value]) => (
-              <Gauge key={key} value={value} label={formatLabel(key)} />
+              <Gauge key={key} value={value} label={ formatLabel(key) } />
             ))
           }
 
-          <div className='flex flex-row justify-center items-center space-x-5'>
+          <div className='flex flex-col justify-center items-center space-y-5'>
             <button className='w-full bg-amber-600 p-3 rounded-md text-xl hover:bg-amber-500 hover:text-slate-950' onClick={ () => { alert(`Test`) } }>
               Predict Conditions
             </button>
@@ -165,7 +173,8 @@ const Dashboard = () => {
                   Get Readings
                 </button> 
                 : 
-                <button className='w-full p-3 rounded-md text-xl border-2 border-amber-600 hover:bg-amber-500 hover:text-slate-950 hover:border-amber-500'>
+                <button className='w-full p-3 rounded-md text-xl border-2 border-amber-600 hover:bg-amber-500 hover:text-slate-950 hover:border-amber-500'
+                 onClick={ handleSavingOfReadings }>
                   Save Readings
                 </button> 
             }
