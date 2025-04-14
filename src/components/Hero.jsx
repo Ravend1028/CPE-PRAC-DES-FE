@@ -19,7 +19,7 @@ const Hero = ({ children }) => {
         </div>
         
         <h1 className='font-bold text-6xl text-center uppercase z-10'>
-          <span className='text-amber-600'>Predictive</span> Vital Signs Patient Monitoring and Recording Kiosk for Philippines Health Centers Applying Long Short-Term Memory Algorithm
+          <span className='text-amber-600'>Predictive</span> Vital Signs Patient Monitoring and Recording Kiosk for Philippines Health Centers Applying Random Forest Algorithm
         </h1>
         
         { children }

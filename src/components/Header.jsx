@@ -34,7 +34,7 @@ const Header = () => {
         
         <div className="flex flex-row justify-center items-center space-x-2">
           <Link to = "/"><img src={ logo } alt="cdm-logo" className='w-20'/></Link>
-          <h3 className='font-bold text-lg uppercase'>Predictive Vital Signs Patient Monitoring and Recording Kiosk for Philippines Health Centers Applying Long Short-Term Memory Algorithm</h3>
+          <h3 className='font-bold text-lg uppercase'>Predictive Vital Signs Patient Monitoring and Recording Kiosk for Philippines Health Centers Applying Random Forest Algorithm</h3>
         </div>
 
         <div className='flex space-x-5 ml-20 pl-2'>

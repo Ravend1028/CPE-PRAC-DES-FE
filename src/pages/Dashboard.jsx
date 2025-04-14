@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react'; 
 import { toast } from 'react-toastify';
-import { setCredentials } from '../slices/authSlice';
+import { setCredentials, setVitalStatistics } from '../slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useUpdateUserMutation } from '../slices/usersApiSlice';
 import { MdEditSquare } from "react-icons/md";
@@ -11,6 +11,7 @@ import Spinner from '../components/Spinner';
 const Dashboard = () => {
   const [isVisible, setVisibility] = useState(false);
   const modalRef = useRef(null);
+  const socketRef = useRef(null);
 
   const [isReading, setReading] = useState(false);
  
@@ -123,6 +124,47 @@ const Dashboard = () => {
     // Listen for data and then set gauges value to received data
     // Optimize logic for continuos readings
 
+    // Prevent reconnecting if already connected
+    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) return;
+
+    // Connect to the WebSocket server
+    socketRef.current = new WebSocket("ws://localhost:4000/datas");
+
+    socketRef.current.onopen = () => {
+      console.log("Connected to WebSocket server");
+    };
+
+    socketRef.current.onmessage = (event) => {
+      try {
+        const rawData = JSON.parse(event.data);
+
+        // Transform the data to match your model
+        const transformedData = {
+          height: rawData.height ?? 0,
+          weight: rawData.weight ?? 0,
+          BMI: rawData.BMI ?? 0,
+          bodyTemperature: rawData.bodyTemperature ?? 0,
+          pulseRate: rawData.pulseRate ?? 0,
+          bloodOxygenLevel: rawData.bloodOxygenLevel ?? 0,
+          bloodPressure: rawData.bloodPressure ?? 0,
+          respiratoryRate: rawData.respiratoryRate ?? 0
+        };
+
+        // Update your vital statistics (assuming this updates your UI)
+        dispatch(setVitalStatistics(transformedData));
+      } catch (error) {
+        console.error("Error parsing WebSocket data:", error);
+      }
+    };
+
+    socketRef.current.onerror = (error) => {
+      console.error("WebSocket error:", error);
+    };
+
+    socketRef.current.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
+
     setReading(true);
   };
 
@@ -138,7 +180,7 @@ const Dashboard = () => {
 
   return (
     <main className='relative flex justify-center items-center'>
-      <div className="container mx-auto p-6 flex flex-col font-poppins space-y-2">
+      <div className="container mx-auto p-6 flex flex-col font-poppins space-y-9">
         <div className='flex justify-center items-center p-3 border-b-2 border-gray-950 space-x-10'>
           <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" readOnly value={ name }/>
 
@@ -155,7 +197,7 @@ const Dashboard = () => {
           </button>
         </div>
 
-        <div className='grid grid-cols-3 gap-5 p-3'>
+        <div className='grid grid-cols-3 gap-5 p-6'>
           { 
             Object.entries(vitalStatistics).map(([key, value]) => (
               <Gauge key={key} value={value} label={ formatLabel(key) } />
