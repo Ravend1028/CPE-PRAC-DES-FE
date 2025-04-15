@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
 import { setCredentials, setVitalStatistics } from '../slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { useUpdateUserMutation } from '../slices/usersApiSlice';
+import { useUpdateUserMutation, useUpdateUserVitalsMutation } from '../slices/usersApiSlice';
 import { MdEditSquare } from "react-icons/md";
 import Gauge from '../components/Gauge';
 import Spinner from '../components/Spinner';
@@ -31,10 +31,12 @@ const Dashboard = () => {
   const [waistCircumference, setWaistCircumference] = useState('');
 
   const dispatch = useDispatch();
-  const [updateProfile, { isLoading }] = useUpdateUserMutation();
+  const [updateProfile] = useUpdateUserMutation();
+  const [updateVitals] = useUpdateUserVitalsMutation();
 
   const { userInfo } = useSelector((state) => state.auth); 
   const { vitalStatistics } = userInfo;
+  const { _id } = userInfo;
 
   useEffect(() => {
     // const handleClickOutside = (event) => {
@@ -150,7 +152,6 @@ const Dashboard = () => {
           respiratoryRate: rawData.respiratoryRate ?? 0
         };
 
-        // Update your vital statistics (assuming this updates your UI)
         dispatch(setVitalStatistics(transformedData));
       } catch (error) {
         console.error("Error parsing WebSocket data:", error);
@@ -168,19 +169,29 @@ const Dashboard = () => {
     setReading(true);
   };
 
-  // Add event listener for saving to mongodb
-  const handleSavingOfReadings = () => {
-    // API call to backend readings
+  const handleSavingOfReadings = async () => {
+    // Close websocket connection then do api call to update user vital signs in db
+
+    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+      socketRef.current.close();
+      console.log("WebSocket connection closed manually");
+    }
+
     try {
+      const res = await updateVitals({ _id, vitalStatistics }).unwrap();
+      toast.success('Vital signs readings have been saved succesfully');
+      // setTimeout(() => {
+      //   navigate('/');
+      // }, 5000);
       setReading(false);
-    } catch (error) {
-      
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
     }
   }
 
   return (
     <main className='relative flex justify-center items-center'>
-      <div className="container mx-auto p-6 flex flex-col font-poppins space-y-9">
+      <div className="container mx-auto p-6 flex flex-col font-poppins space-y-4">
         <div className='flex justify-center items-center p-3 border-b-2 border-gray-950 space-x-10'>
           <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" readOnly value={ name }/>
 

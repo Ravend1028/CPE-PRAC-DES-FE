@@ -15,9 +15,9 @@ const ForgotPass = () => {
   const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
-      if (userInfo) {
-        navigate('/dashboard');
-      } 
+    if (userInfo) {
+      navigate('/dashboard');
+    } 
   }, [navigate, userInfo]);
 
   const handleFormSubmit = async (e) => {

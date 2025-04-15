@@ -1,7 +1,7 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 
-const Gauge = ({ value, label, height = 200}) => {
+const Gauge = ({ value, label, height = 210}) => {
   const options = {
     chart: {
       type: 'radialBar',
@@ -16,17 +16,19 @@ const Gauge = ({ value, label, height = 200}) => {
           endAngle: 90,
         },
         hollow: {
-          size: '70%',
+          size: '65%',
         },
         dataLabels: {
           name: {
             show: true,
-            offsetY: 15, // Push the label below gauge
+            offsetY: 20, // Push the label below gauge
+            fontSize: '21px'
           },
           value: {
             show: true,
-            fontSize: '20px',
+            fontSize: '21px',
             fontWeight: 'bold',
+            offsetY: -15,
             formatter: function (val) {
               return val; // Display the raw value instead of percentage
             },
