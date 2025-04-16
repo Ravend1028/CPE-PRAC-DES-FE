@@ -6,13 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useUpdateUserMutation, useUpdateUserVitalsMutation } from '../slices/usersApiSlice';
 import { MdEditSquare } from "react-icons/md";
 import Gauge from '../components/Gauge';
+import EditableGauge from '../components/EditableGauge';
 import Spinner from '../components/Spinner';
 
 const Dashboard = () => {
   const [isVisible, setVisibility] = useState(false);
   const modalRef = useRef(null);
   const socketRef = useRef(null);
-
   const [isReading, setReading] = useState(false);
  
   const [name, setName] = useState('');
@@ -37,6 +37,13 @@ const Dashboard = () => {
   const { userInfo } = useSelector((state) => state.auth); 
   const { vitalStatistics } = userInfo;
   const { _id } = userInfo;
+
+  const [manualValues, setManualValues] = useState({
+    bloodPressure: null,
+    respiratoryRate: null
+  });
+
+  const manualValuesRef = useRef(manualValues);
 
   useEffect(() => {
     // const handleClickOutside = (event) => {
@@ -67,6 +74,8 @@ const Dashboard = () => {
     setBloodOxygenLevel(vitalStatistics.bloodOxygenLevel);
     setBMI(vitalStatistics.BMI);
     setWaistCircumference(vitalStatistics.waistCircumference);
+
+    manualValuesRef.current = manualValues;
   }, [
     userInfo.name, 
     userInfo.age, 
@@ -82,7 +91,7 @@ const Dashboard = () => {
     vitalStatistics.bloodOxygenLevel,
     vitalStatistics.BMI,
     vitalStatistics.waistCircumference,
-    // isVisible
+    manualValues
   ]);
 
   // Modal Event Listener
@@ -138,7 +147,7 @@ const Dashboard = () => {
 
     socketRef.current.onmessage = (event) => {
       try {
-        const rawData = JSON.parse(event.data);
+        const rawData = JSON.parse(event.data); 
 
         // Transform the data to match your model
         const transformedData = {
@@ -148,16 +157,18 @@ const Dashboard = () => {
           bodyTemperature: rawData.bodyTemperature ?? 0,
           pulseRate: rawData.pulseRate ?? 0,
           bloodOxygenLevel: rawData.bloodOxygenLevel ?? 0,
-          bloodPressure: rawData.bloodPressure ?? 0,
-          respiratoryRate: rawData.respiratoryRate ?? 0
+          bloodPressure: manualValuesRef.current.bloodPressure ?? 0,
+          respiratoryRate: manualValuesRef.current.respiratoryRate ?? 0
         };
+
+        console.log(transformedData);
 
         dispatch(setVitalStatistics(transformedData));
       } catch (error) {
         console.error("Error parsing WebSocket data:", error);
       }
     };
-
+    
     socketRef.current.onerror = (error) => {
       console.error("WebSocket error:", error);
     };
@@ -211,7 +222,23 @@ const Dashboard = () => {
         <div className='grid grid-cols-3 gap-5 p-6'>
           { 
             Object.entries(vitalStatistics).map(([key, value]) => (
-              <Gauge key={key} value={value} label={ formatLabel(key) } />
+              ['Blood Pressure', 'Respiratory Rate'].includes(formatLabel(key)) && isReading ? (
+                <EditableGauge 
+                  key={key} 
+                  value={manualValues[key] ?? value} 
+                  label={formatLabel(key)} 
+                  // Update Local State
+                  onChange={(val) => {
+                    setManualValues((prev) => ({
+                      ...prev,
+                      [key]: val
+                    }));
+                  }
+                  }
+                />
+              ) : (
+                <Gauge key={key} value={value} label={formatLabel(key)} />
+              )
             ))
           }
 
