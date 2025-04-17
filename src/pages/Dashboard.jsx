@@ -39,8 +39,8 @@ const Dashboard = () => {
   const { _id } = userInfo;
 
   const [manualValues, setManualValues] = useState({
-    bloodPressure: null,
-    respiratoryRate: null
+    bloodPressure: vitalStatistics.bloodPressure,
+    respiratoryRate: vitalStatistics.respiratoryRate
   });
 
   const manualValuesRef = useRef(manualValues);

@@ -4,7 +4,8 @@ import Chart from 'react-apexcharts';
 const EditableGauge = ({ value, label, height = 210, onChange }) => {
   const handleInput = (e) => {
     const val = e.target.value;
-    if (!isNaN(val)) onChange(val);
+    // if (!isNaN(val)) 
+    onChange(val);
   };
 
   const options = {
