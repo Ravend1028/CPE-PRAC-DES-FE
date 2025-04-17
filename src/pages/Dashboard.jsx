@@ -288,7 +288,19 @@ const Dashboard = () => {
 
                 <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ age } onChange={(e) => {setAge(e.target.value)}}/>
 
-                <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ gender } onChange={(e) => {setGender(e.target.value)}}/>
+                {/* <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ gender } onChange={(e) => {setGender(e.target.value)}}/> */}
+
+                <select
+                  className={`bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center w-24
+                    ${!gender ? 'text-gray-500' : 'text-white'}`}
+                  name="gender"
+                  value={ gender }
+                  onChange={(e) => setGender(e.target.value)}
+                >
+                  <option value="" disabled hidden className="text-gray-500">M/F</option>
+                  <option value="M" className="text-black">M</option>
+                  <option value="F" className="text-black">F</option>
+                </select>
 
                 <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center w-60' type="text" value={ email } onChange={(e) => {setEmail(e.target.value)}}/>
 
