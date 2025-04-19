@@ -201,10 +201,60 @@ const Dashboard = () => {
   }
 
   const predictVitalsCondition = async () => {
-    // Send a req to ml server running on localhost port 8001
-    // Parse the response into the modal
-    // Also include the state of the modal
-    // Tangina last function ggraduate nako!!!!
+    // console.log(Object.values(vitalStatistics));
+    const url = "http://127.0.0.1:8001/predict";
+
+    const {
+      height,
+      weight,
+      BMI,
+      bloodPressure,
+      pulseRate,
+      respiratoryRate,
+      bodyTemperature,
+      bloodOxygenLevel
+    } = vitalStatistics;
+
+    const [ systolicBP, diastolicBP]  = bloodPressure
+    .split("/")
+    .map(val => parseFloat(val));
+
+    const features = [
+      parseFloat(height),
+      parseFloat(weight),
+      parseFloat(BMI),
+      systolicBP,
+      diastolicBP,
+      parseFloat(pulseRate),
+      parseFloat(respiratoryRate),
+      parseFloat(bodyTemperature),
+      parseFloat(bloodOxygenLevel),
+    ];
+
+    if (features.some(val => val === 0 || isNaN(val))) {
+      toast.error("All values must be greater than 0 and valid numbers");
+      return;
+    }
+
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ features }),
+      });
+  
+      if (!res.ok) {
+        throw new Error(`Response status: ${res.status}`);
+      }
+  
+      const json = await res.json();
+      console.log("Prediction result:", json);
+      // Handle prediction response (e.g., display to UI)
+    } catch (err) {
+      toast.error(err?.message || "Prediction failed");
+    }
   }
 
   return (
