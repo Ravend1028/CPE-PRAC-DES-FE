@@ -4,22 +4,26 @@ import { toast } from 'react-toastify';
 import { setCredentials, setVitalStatistics } from '../slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useUpdateUserMutation, useUpdateUserVitalsMutation } from '../slices/usersApiSlice';
-import { MdEditSquare } from "react-icons/md";
 import Gauge from '../components/Gauge';
 import EditableGauge from '../components/EditableGauge';
 import Spinner from '../components/Spinner';
+import PersonalDetails from '../components/PersonalDetails';
+import UserInfoModal from '../components/UserInfoModal';
+import ActionButtons from '../components/ActionButtons';
+import ReadingAlert from '../components/ReadingAlert';
+import PredictionModal from '../components/PredictionModal';
 
 const Dashboard = () => {
+  // Modal for editing user info and State
   const [isVisible, setVisibility] = useState(false);
-  const modalRef = useRef(null);
-  const socketRef = useRef(null);
+
+  // State for reading esp32 sensors status
   const [isReading, setReading] = useState(false);
+
+  // Modal for Prediction Result and State
+  const [predictModal, setPredictModal] = useState(false);
+  const [predictionResult, setPredictionResult] = useState({});
  
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
-  const [gender, setGender] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
   const [bodyTemperature, setBodyTemperature] = useState('');
@@ -30,14 +34,9 @@ const Dashboard = () => {
   const [BMI, setBMI] = useState('');
   const [waistCircumference, setWaistCircumference] = useState('');
 
-  const dispatch = useDispatch();
-  const [updateProfile] = useUpdateUserMutation();
-  const [updateVitals] = useUpdateUserVitalsMutation();
-
   const { userInfo } = useSelector((state) => state.auth); 
   const { vitalStatistics } = userInfo;
-  const { _id } = userInfo;
-
+ 
   const [manualValues, setManualValues] = useState({
     bloodPressure: vitalStatistics.bloodPressure,
     respiratoryRate: vitalStatistics.respiratoryRate
@@ -46,25 +45,6 @@ const Dashboard = () => {
   const manualValuesRef = useRef(manualValues);
 
   useEffect(() => {
-    // const handleClickOutside = (event) => {
-    //   if (modalRef.current && !modalRef.current.contains(event.target)) {
-    //     setVisibility(false);
-    //   }
-    // };
-  
-    // if (isVisible) {
-    //   document.addEventListener("mousedown", handleClickOutside);
-    // }
-  
-    // return () => {
-    //   document.removeEventListener("mousedown", handleClickOutside);
-    // };
-
-    setName(userInfo.name);
-    setAge(userInfo.age);
-    setGender(userInfo.gender);
-    setEmail(userInfo.email);
-    setPhone(userInfo.phone);
     setHeight(vitalStatistics.height);
     setWeight(vitalStatistics.weight);
     setBodyTemperature(vitalStatistics.bodyTemperature);
@@ -77,11 +57,6 @@ const Dashboard = () => {
 
     manualValuesRef.current = manualValues;
   }, [
-    userInfo.name, 
-    userInfo.age, 
-    userInfo.gender, 
-    userInfo.email, 
-    userInfo.phone,
     vitalStatistics.height,
     vitalStatistics.weight,
     vitalStatistics.bodyTemperature,
@@ -94,188 +69,20 @@ const Dashboard = () => {
     manualValues
   ]);
 
-  // Modal Event Listener
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const res = await updateProfile({
-        name,
-        age,
-        gender,
-        email,
-        phone
-      }).unwrap();
-      dispatch(setCredentials({ ...res }));
-      toast.success('Profile Updated Successfully');
-      setVisibility(false);
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
-    }
-  };  
-
-  // Function for toggling the modal
-  const handleToggleClick = () => {
-    setVisibility(true);
-  };
-
-  // Function for closing the modal
-  const handleCancelClick = () => {
-    setVisibility(false);
-  };  
-
   const formatLabel = (key) => {
     return key
-      .replace(/([a-z])([A-Z])/g, "$1 $2") // Insert space before uppercase letters
-      .replace(/^./, (str) => str.toUpperCase()); // Capitalize the first letter
+      .replace(/([a-z])([A-Z])/g, "$1 $2") 
+      .replace(/^./, (str) => str.toUpperCase()); 
   };
-
-  const getSensorReadings = () => {
-    // Connect to web socket server
-    // Listen for data and then set gauges value to received data
-    // Optimize logic for continuos readings
-
-    // Prevent reconnecting if already connected
-    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) return;
-
-    // Connect to the WebSocket server
-    socketRef.current = new WebSocket("ws://localhost:4000/datas");
-
-    socketRef.current.onopen = () => {
-      console.log("Connected to WebSocket server");
-    };
-
-    socketRef.current.onmessage = (event) => {
-      try {
-        const rawData = JSON.parse(event.data); 
-
-        // Transform the data to match your model
-        const transformedData = {
-          height: rawData.height ?? 0,
-          weight: rawData.weight ?? 0,
-          BMI: rawData.BMI ?? 0,
-          bodyTemperature: rawData.bodyTemperature ?? 0,
-          pulseRate: rawData.pulseRate ?? 0,
-          bloodOxygenLevel: rawData.bloodOxygenLevel ?? 0,
-          bloodPressure: manualValuesRef.current.bloodPressure ?? 0,
-          respiratoryRate: manualValuesRef.current.respiratoryRate ?? 0
-        };
-
-        console.log(transformedData);
-
-        dispatch(setVitalStatistics(transformedData));
-      } catch (error) {
-        console.error("Error parsing WebSocket data:", error);
-      }
-    };
-    
-    socketRef.current.onerror = (error) => {
-      console.error("WebSocket error:", error);
-    };
-
-    socketRef.current.onclose = () => {
-      console.log("WebSocket connection closed");
-    };
-
-    setReading(true);
-  };
-
-  const handleSavingOfReadings = async () => {
-    // Close websocket connection then do api call to update user vital signs in db
-
-    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-      socketRef.current.close();
-      console.log("WebSocket connection closed manually");
-    }
-
-    try {
-      const res = await updateVitals({ _id, vitalStatistics }).unwrap();
-      toast.success('Vital signs readings have been saved succesfully');
-      // setTimeout(() => {
-      //   navigate('/');
-      // }, 5000);
-      setReading(false);
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
-    }
-  }
-
-  const predictVitalsCondition = async () => {
-    // console.log(Object.values(vitalStatistics));
-    const url = "http://127.0.0.1:8001/predict";
-
-    const {
-      height,
-      weight,
-      BMI,
-      bloodPressure,
-      pulseRate,
-      respiratoryRate,
-      bodyTemperature,
-      bloodOxygenLevel
-    } = vitalStatistics;
-
-    const [ systolicBP, diastolicBP]  = bloodPressure
-    .split("/")
-    .map(val => parseFloat(val));
-
-    const features = [
-      parseFloat(height),
-      parseFloat(weight),
-      parseFloat(BMI),
-      systolicBP,
-      diastolicBP,
-      parseFloat(pulseRate),
-      parseFloat(respiratoryRate),
-      parseFloat(bodyTemperature),
-      parseFloat(bloodOxygenLevel),
-    ];
-
-    if (features.some(val => val === 0 || isNaN(val))) {
-      toast.error("All values must be greater than 0 and valid numbers");
-      return;
-    }
-
-    try {
-      const res = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ features }),
-      });
-  
-      if (!res.ok) {
-        throw new Error(`Response status: ${res.status}`);
-      }
-  
-      const json = await res.json();
-      console.log("Prediction result:", json);
-      // Handle prediction response (e.g., display to UI)
-    } catch (err) {
-      toast.error(err?.message || "Prediction failed");
-    }
-  }
 
   return (
     <main className='relative flex justify-center items-center'>
       <div className="container mx-auto p-6 flex flex-col font-poppins space-y-4">
-        <div className='flex justify-center items-center p-3 border-b-2 border-gray-950 space-x-10'>
-          <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" readOnly value={ name }/>
 
-          <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" readOnly value={ age }/>
+        {/* Personal Details Field Group */}
+        <PersonalDetails setVisibility={ setVisibility } />
 
-          <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center w-28' type="text" readOnly value={ gender }/>
-
-          <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center w-72' type="text" readOnly value={ email }/>
-
-          <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" readOnly value={ phone }/>
-
-          <button className='p-3 rounded-md text-3xl hover:border-amber-500 hover:bg-amber-500' onClick={ handleToggleClick }>
-            <MdEditSquare />
-          </button>
-        </div>
-
+        {/* Rendering of Gauges */}
         <div className='grid grid-cols-3 gap-5 p-6'>
           { 
             Object.entries(vitalStatistics).map(([key, value]) => (
@@ -299,82 +106,27 @@ const Dashboard = () => {
             ))
           }
 
-          <div className='flex flex-col justify-center items-center space-y-5'>
-            <button className='w-full bg-amber-600 p-3 rounded-md text-xl hover:bg-amber-500 hover:text-slate-950' onClick={ predictVitalsCondition }>
-              Predict Conditions
-            </button>
-
-            { !isReading ? 
-                <button className='w-full p-3 rounded-md text-xl border-2 border-amber-600 hover:bg-amber-500 hover:text-slate-950 hover:border-amber-500'
-                 onClick={ getSensorReadings }>
-                  Get Readings
-                </button> 
-                : 
-                <button className='w-full p-3 rounded-md text-xl border-2 border-amber-600 hover:bg-amber-500 hover:text-slate-950 hover:border-amber-500'
-                 onClick={ handleSavingOfReadings }>
-                  Save Readings
-                </button> 
-            }
-          </div>
+          <ActionButtons setPredictModal={ setPredictModal } setPredictionResult={ setPredictionResult } isReading={ isReading } setReading={ setReading }/>
 
           {
             isReading && (
-              <div className='flex flex-row justify-center items-center space-x-5'>
-                <div className='flex justify-center items-center w-full bg-red-300 p-3 rounded-md text-lg text-slate-950'>
-                  <Spinner />
-
-                  Reading Sensor Data Press `Save` to Stop
-                </div>
-              </div> 
+              <ReadingAlert />
             )
           }
         </div>
       </div>
 
-      {/* Edit User Info Modal -- Separate this into a stand alone component in revision time */}
+      {/* Edit User Info Modal */}
       {
         isVisible && (
-          <div className='absolute bg-gray-950 w-1/4 rounded-md p-3 text-white'>
-            <form className='flex flex-col justify-center items-center space-y-5' onSubmit={ handleFormSubmit }>
-              <h3 className='font-bold text-xl uppercase border-b-2 border-amber-600'>
-                Edit User Info
-              </h3>
+          <UserInfoModal setVisibility={ setVisibility } />
+        )
+      }
 
-              <div className='flex flex-col justify-center items-center p-3 border-b-2 border-gray-950 space-y-5'>
-                <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ name } onChange={(e) => {setName(e.target.value)}}  ref={ modalRef }/>
-
-                <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ age } onChange={(e) => {setAge(e.target.value)}}/>
-
-                {/* <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ gender } onChange={(e) => {setGender(e.target.value)}}/> */}
-
-                <select
-                  className={`bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center w-24
-                    ${!gender ? 'text-gray-500' : 'text-white'}`}
-                  name="gender"
-                  value={ gender }
-                  onChange={(e) => setGender(e.target.value)}
-                >
-                  <option value="" disabled hidden className="text-gray-500">M/F</option>
-                  <option value="M" className="text-black">M</option>
-                  <option value="F" className="text-black">F</option>
-                </select>
-
-                <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center w-60' type="text" value={ email } onChange={(e) => {setEmail(e.target.value)}}/>
-
-                <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" value={ phone } onChange={(e) => {setPhone(e.target.value)}}/>
-              </div>
-              
-              <div className='flex flex-row justify-center items-center space-x-5'>
-                <button className='w-full bg-amber-600 p-2 rounded-md text-xl hover:bg-amber-500 hover:text-slate-950' type='submit'>
-                  Save
-                </button>
-
-                <button className='w-full p-2 rounded-md text-xl border-2 border-amber-600 hover:bg-amber-500 hover:text-slate-950 hover:border-amber-500' onClick={ handleCancelClick }>
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
+      {/* Prediction Result Modal */}
+      {
+        predictModal && (
+          <PredictionModal setPredictModal={ setPredictModal }/>
         )
       }
     </main>
