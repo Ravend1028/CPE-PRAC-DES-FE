@@ -200,6 +200,13 @@ const Dashboard = () => {
     }
   }
 
+  const predictVitalsCondition = async () => {
+    // Send a req to ml server running on localhost port 8001
+    // Parse the response into the modal
+    // Also include the state of the modal
+    // Tangina last function ggraduate nako!!!!
+  }
+
   return (
     <main className='relative flex justify-center items-center'>
       <div className="container mx-auto p-6 flex flex-col font-poppins space-y-4">
@@ -243,7 +250,7 @@ const Dashboard = () => {
           }
 
           <div className='flex flex-col justify-center items-center space-y-5'>
-            <button className='w-full bg-amber-600 p-3 rounded-md text-xl hover:bg-amber-500 hover:text-slate-950' onClick={ () => { alert(`Test`) } }>
+            <button className='w-full bg-amber-600 p-3 rounded-md text-xl hover:bg-amber-500 hover:text-slate-950' onClick={ predictVitalsCondition }>
               Predict Conditions
             </button>
 
