@@ -106,7 +106,7 @@ const Dashboard = () => {
             ))
           }
 
-          <ActionButtons setPredictModal={ setPredictModal } setPredictionResult={ setPredictionResult } isReading={ isReading } setReading={ setReading }/>
+          <ActionButtons manualValuesRef={ manualValuesRef } setPredictModal={ setPredictModal } setPredictionResult={ setPredictionResult } isReading={ isReading } setReading={ setReading }/>
 
           {
             isReading && (
@@ -126,7 +126,7 @@ const Dashboard = () => {
       {/* Prediction Result Modal */}
       {
         predictModal && (
-          <PredictionModal setPredictModal={ setPredictModal }/>
+          <PredictionModal predictionResult={ predictionResult } setPredictModal={ setPredictModal }/>
         )
       }
     </main>

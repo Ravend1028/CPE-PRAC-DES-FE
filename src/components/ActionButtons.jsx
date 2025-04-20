@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setVitalStatistics } from '../slices/authSlice';
 import { useUpdateUserVitalsMutation } from '../slices/usersApiSlice';
 
-const ActionButtons = ({ setPredictModal, setPredictionResult, isReading ,setReading }) => {
+const ActionButtons = ({ manualValuesRef, setPredictModal, setPredictionResult, isReading ,setReading }) => {
   const socketRef = useRef(null);
   
   const dispatch = useDispatch();
@@ -65,7 +65,7 @@ const ActionButtons = ({ setPredictModal, setPredictionResult, isReading ,setRea
   
       const json = await res.json();
       setPredictionResult(json);
-      console.log(json);
+      // console.log(json);
       setPredictModal(true);
 
     } catch (err) {
