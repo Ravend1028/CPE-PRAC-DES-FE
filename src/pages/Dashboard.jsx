@@ -75,6 +75,17 @@ const Dashboard = () => {
       .replace(/^./, (str) => str.toUpperCase()); 
   };
 
+  const orderedKeys = [
+    'height',
+    'weight',
+    'BMI',
+    'bodyTemperature',
+    'bloodOxygenLevel',
+    'pulseRate',
+    'bloodPressure',
+    'respiratoryRate'
+  ];
+
   return (
     <main className='relative flex justify-center items-center'>
       <div className="container mx-auto p-6 flex flex-col font-poppins space-y-4">
@@ -84,7 +95,7 @@ const Dashboard = () => {
 
         {/* Rendering of Gauges */}
         <div className='grid grid-cols-4 gap-5 p-6'>
-          { 
+          {/* { 
             Object.entries(vitalStatistics).map(([key, value]) => (
               ['Blood Pressure', 'Respiratory Rate'].includes(formatLabel(key)) && isReading ? (
                 <EditableGauge 
@@ -104,11 +115,34 @@ const Dashboard = () => {
                 <Gauge key={key} value={value} label={formatLabel(key)} />
               )
             ))
+          } */
+            
+            orderedKeys
+              .filter(key => 
+                vitalStatistics.hasOwnProperty(key) && 
+                !['Blood Pressure', 'Respiratory Rate'].includes(formatLabel(key))
+              )
+              .map(key => {
+                if (orderedKeys.indexOf(key) === 2 || orderedKeys.indexOf(key) === 5) {
+                    return (
+                      <>
+                        <Gauge key={key} value={vitalStatistics[key]} label={formatLabel(key)} />
+
+                        <ActionButtons manualValuesRef={ manualValuesRef } setPredictModal={ setPredictModal } setPredictionResult={ setPredictionResult } isReading={ isReading } setReading={ setReading }/>
+                        {/* To Change using new component dedicated for getting certain readings */}
+                      </>
+                    )
+                  } else {
+                    return <Gauge key={key} value={vitalStatistics[key]} label={formatLabel(key)} />
+                  }
+                }
+              )
+
           }
 
           {/* <ActionButtons manualValuesRef={ manualValuesRef } setPredictModal={ setPredictModal } setPredictionResult={ setPredictionResult } isReading={ isReading } setReading={ setReading }/> */}
 
-          {/* Refactor this component into separate button and functionality */}
+          {/* Refactor this component into separate button and functionality, to be used in 2 phases */}
 
           {
             isReading && (
@@ -122,6 +156,7 @@ const Dashboard = () => {
           - Include Phasing for getting readings
           - Average the gathered data to display
           - Also Instructions to be included in phasing for guiding user on how to use the fucking kiosk
+          - Dont make a gauge in manual input / revamped
         */}
       </div>
 
