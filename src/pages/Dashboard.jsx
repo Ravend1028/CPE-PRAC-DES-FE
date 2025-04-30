@@ -83,7 +83,7 @@ const Dashboard = () => {
         <PersonalDetails setVisibility={ setVisibility } />
 
         {/* Rendering of Gauges */}
-        <div className='grid grid-cols-3 gap-5 p-6'>
+        <div className='grid grid-cols-4 gap-5 p-6'>
           { 
             Object.entries(vitalStatistics).map(([key, value]) => (
               ['Blood Pressure', 'Respiratory Rate'].includes(formatLabel(key)) && isReading ? (
@@ -106,7 +106,9 @@ const Dashboard = () => {
             ))
           }
 
-          <ActionButtons manualValuesRef={ manualValuesRef } setPredictModal={ setPredictModal } setPredictionResult={ setPredictionResult } isReading={ isReading } setReading={ setReading }/>
+          {/* <ActionButtons manualValuesRef={ manualValuesRef } setPredictModal={ setPredictModal } setPredictionResult={ setPredictionResult } isReading={ isReading } setReading={ setReading }/> */}
+
+          {/* Refactor this component into separate button and functionality */}
 
           {
             isReading && (
@@ -114,6 +116,13 @@ const Dashboard = () => {
             )
           }
         </div>
+
+        {/* 
+          - Include the new fields and checkboxes here
+          - Include Phasing for getting readings
+          - Average the gathered data to display
+          - Also Instructions to be included in phasing for guiding user on how to use the fucking kiosk
+        */}
       </div>
 
       {/* Edit User Info Modal */}

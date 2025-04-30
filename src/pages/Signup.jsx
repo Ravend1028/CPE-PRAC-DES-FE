@@ -98,8 +98,8 @@ const Signup = () => {
                     onChange={(e) => setGender(e.target.value)}
                   >
                     <option value="" disabled hidden className="text-gray-500">M/F</option>
-                    <option value="Male" className="text-black">M</option>
-                    <option value="Female" className="text-black">F</option>
+                    <option value="M" className="text-black">M</option>
+                    <option value="F" className="text-black">F</option>
                   </select>
                 </div>
               </div>

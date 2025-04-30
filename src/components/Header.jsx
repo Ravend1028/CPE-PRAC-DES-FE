@@ -42,9 +42,9 @@ const Header = () => {
             Profile
           </NavLink>
 
-          <NavLink to='/settings' className={ classLink }>
-            Settings
-          </NavLink>
+          {/* <NavLink to='/settings' className={ classLink }> */}
+            {/* /Settings */}
+          {/* </NavLink> */}
 
           <NavLink to='/logout' className={ classLink } onClick={(e) => handleLogout(e)}>
             Logout
