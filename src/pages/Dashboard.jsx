@@ -12,6 +12,7 @@ import UserInfoModal from '../components/UserInfoModal';
 import ActionButtons from '../components/ActionButtons';
 import ReadingAlert from '../components/ReadingAlert';
 import PredictionModal from '../components/PredictionModal';
+import PredictButton from '../components/PredictButton';
 
 const Dashboard = () => {
   // Modal for editing user info and State
@@ -32,7 +33,9 @@ const Dashboard = () => {
   const [respiratoryRate, setRespiratoryRate] = useState('');
   const [bloodOxygenLevel, setBloodOxygenLevel] = useState('');
   const [BMI, setBMI] = useState('');
-  const [waistCircumference, setWaistCircumference] = useState('');
+  const [waist, setWaistCircumference] = useState('');
+  const [hips, setHips] = useState('');
+  const [vice, setVice] = useState('');
 
   const { userInfo } = useSelector((state) => state.auth); 
   const { vitalStatistics } = userInfo;
@@ -44,6 +47,11 @@ const Dashboard = () => {
 
   const manualValuesRef = useRef(manualValues);
 
+  // Phasing State
+  const [phaseOne, setPhaseOne] = useState(false);
+  const [phaseTwo, setPhaseTwo] = useState(true);
+  const [predictionButton, setPredictionButton] = useState(true)
+
   useEffect(() => {
     setHeight(vitalStatistics.height);
     setWeight(vitalStatistics.weight);
@@ -53,7 +61,9 @@ const Dashboard = () => {
     setRespiratoryRate(vitalStatistics.respiratoryRate);
     setBloodOxygenLevel(vitalStatistics.bloodOxygenLevel);
     setBMI(vitalStatistics.BMI);
-    setWaistCircumference(vitalStatistics.waistCircumference);
+    setWaistCircumference(vitalStatistics.waist);
+    setHips(vitalStatistics.hips);
+    setVice(vitalStatistics.vice);
 
     manualValuesRef.current = manualValues;
   }, [
@@ -65,7 +75,9 @@ const Dashboard = () => {
     vitalStatistics.respiratoryRate,
     vitalStatistics.bloodOxygenLevel,
     vitalStatistics.BMI,
-    vitalStatistics.waistCircumference,
+    vitalStatistics.waist,
+    vitalStatistics.hips,
+    vitalStatistics.vice,
     manualValues
   ]);
 
@@ -123,13 +135,20 @@ const Dashboard = () => {
                 !['Blood Pressure', 'Respiratory Rate'].includes(formatLabel(key))
               )
               .map(key => {
-                if (orderedKeys.indexOf(key) === 2 || orderedKeys.indexOf(key) === 5) {
+                if (orderedKeys.indexOf(key) === 2) {
                     return (
                       <>
                         <Gauge key={key} value={vitalStatistics[key]} label={formatLabel(key)} />
 
-                        <ActionButtons manualValuesRef={ manualValuesRef } setPredictModal={ setPredictModal } setPredictionResult={ setPredictionResult } isReading={ isReading } setReading={ setReading }/>
-                        {/* To Change using new component dedicated for getting certain readings */}
+                        <ActionButtons manualValuesRef={ manualValuesRef } setPredictModal={ setPredictModal } setPredictionResult={ setPredictionResult } isReading={ isReading } setReading={ setReading } isDisabled={ phaseOne } setPhaseOne={ setPhaseOne } setPhaseTwo={ setPhaseTwo }/>
+                      </>
+                    )
+                  } else if (orderedKeys.indexOf(key) === 5) {
+                    return (
+                      <>
+                        <Gauge key={key} value={vitalStatistics[key]} label={formatLabel(key)} />
+
+                        <ActionButtons manualValuesRef={ manualValuesRef } setPredictModal={ setPredictModal } setPredictionResult={ setPredictionResult } isReading={ isReading } setReading={ setReading } isDisabled={ phaseTwo } setPhaseOne={ setPhaseOne } setPhaseTwo={ setPhaseTwo }/>
                       </>
                     )
                   } else {
@@ -140,24 +159,59 @@ const Dashboard = () => {
 
           }
 
-          {/* <ActionButtons manualValuesRef={ manualValuesRef } setPredictModal={ setPredictModal } setPredictionResult={ setPredictionResult } isReading={ isReading } setReading={ setReading }/> */}
-
-          {/* Refactor this component into separate button and functionality, to be used in 2 phases */}
-
           {
             isReading && (
               <ReadingAlert />
             )
           }
-        </div>
 
-        {/* 
-          - Include the new fields and checkboxes here
-          - Include Phasing for getting readings
-          - Average the gathered data to display
-          - Also Instructions to be included in phasing for guiding user on how to use the fucking kiosk
-          - Dont make a gauge in manual input / revamped
-        */}
+
+          <div className="flex flex-col space-y-5">
+            <div className="flex flex-col justify-center space-y-2">
+              <label className='font-bold uppercase' htmlFor="username">Blood Pressure: </label>
+              <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="text" name='username' value={ bloodPressure } placeholder='Enter your BP' onChange={(e) => {setBloodPressure(e.target.value)}}/>
+            </div>
+
+            <div className="flex flex-col justify-center space-y-2">
+              <label className='font-bold uppercase' htmlFor="username">Respiratory Rate: </label>
+              <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="text" name='username' value={ respiratoryRate } placeholder='Enter your Respiratory Rate' onChange={(e) => {setRespiratoryRate(e.target.value)}}/>
+            </div>
+          </div>
+
+          <div className="flex flex-col space-y-5">
+            <div className="flex flex-col justify-center space-y-2">
+              <label className='font-bold uppercase' htmlFor="username">Waist Circumference: </label>
+              <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="text" name='username' value={ waist } placeholder='Enter your waist' onChange={(e) => {setWaistCircumference(e.target.value)}}/>
+            </div>
+
+            <div className="flex flex-col justify-center space-y-2">
+              <label className='font-bold uppercase' htmlFor="username">Hip Circumference: </label>
+              <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="text" name='username' value={ hips } placeholder='Enter your hips' onChange={(e) => {setHips(e.target.value)}}/>
+            </div>
+          </div>
+
+          <div className="flex flex-col justify-center items-center space-y-5 border-x-2 border-slate-950 rounded-md p-2">
+            <h4 className='uppercase font-bold'>
+              Smoker/Alcoholic ?
+            </h4>
+
+            <div className="flex flex-row space-x-5">
+                <div>
+                  <input type="radio" id="yes" name="yes" value="1"/>
+                  <label for="yes" className='ml-2'>Yes</label>
+                </div>
+
+                <div>
+                  <input type="radio" id="no" name="no" value="0"/>
+                  <label for="no" className='ml-2'>No</label>
+                </div>
+            </div>
+          </div>
+
+          <div className='flex justify-center items-center'>
+            <PredictButton setPredictModal={ setPredictModal } setPredictionResult={ setPredictionResult } enablePrediction={ predictionButton }/>
+          </div>
+        </div>
       </div>
 
       {/* Edit User Info Modal */}

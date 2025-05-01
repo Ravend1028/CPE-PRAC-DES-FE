@@ -5,7 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setVitalStatistics } from '../slices/authSlice';
 import { useUpdateUserVitalsMutation } from '../slices/usersApiSlice';
 
-const ActionButtons = ({ manualValuesRef, setPredictModal, setPredictionResult, isReading ,setReading }) => {
+const ActionButtons = ({ manualValuesRef, isReading, setReading, isDisabled, setPhaseOne, setPhaseTwo }) => {
+  const buttonUI = isDisabled ? 'w-full p-3 rounded-md text-xl bg-slate-200 text-slate-400' : 'w-full p-3 rounded-md text-xl border-2 border-amber-600 hover:bg-amber-500 hover:text-slate-950 hover:border-amber-500';
+
   const socketRef = useRef(null);
   
   const dispatch = useDispatch();
@@ -14,64 +16,6 @@ const ActionButtons = ({ manualValuesRef, setPredictModal, setPredictionResult, 
   const { _id } = userInfo;
 
   const [updateVitals] = useUpdateUserVitalsMutation();
-  
-  const predictVitalsCondition = async () => {
-    const url = "http://127.0.0.1:8001/predict";
-
-    const {
-      height,
-      weight,
-      BMI,
-      bloodPressure,
-      pulseRate,
-      respiratoryRate,
-      bodyTemperature,
-      bloodOxygenLevel
-    } = vitalStatistics;
-
-    const [ systolicBP, diastolicBP]  = bloodPressure
-    .split("/")
-    .map(val => parseFloat(val));
-
-    const features = [
-      parseFloat(height),
-      parseFloat(weight),
-      parseFloat(BMI),
-      systolicBP,
-      diastolicBP,
-      parseFloat(pulseRate),
-      parseFloat(respiratoryRate),
-      parseFloat(bodyTemperature),
-      parseFloat(bloodOxygenLevel),
-    ];
-
-    if (features.some(val => val === 0 || isNaN(val))) {
-      toast.error("All values must be greater than 0 and valid numbers");
-      return;
-    }
-
-    try {
-      const res = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ features }),
-      });
-  
-      if (!res.ok) {
-        throw new Error(`Response status: ${res.status}`);
-      }
-  
-      const json = await res.json();
-      setPredictionResult(json);
-      // console.log(json);
-      setPredictModal(true);
-
-    } catch (err) {
-      toast.error(err?.message || "Prediction failed");
-    }
-  };
 
   const getSensorReadings = () => {
     // Prevent reconnecting if already connected
@@ -115,6 +59,10 @@ const ActionButtons = ({ manualValuesRef, setPredictModal, setPredictionResult, 
     };
 
     setReading(true);
+
+    // Phasing Buttons State
+    setPhaseTwo(false);
+    setPhaseOne(true);
   };
 
   const handleSavingOfReadings = async () => {
@@ -134,13 +82,9 @@ const ActionButtons = ({ manualValuesRef, setPredictModal, setPredictionResult, 
 
   return (
     <div className='flex flex-col justify-center items-center space-y-5'>
-      <button className='w-full bg-amber-600 p-3 rounded-md text-xl hover:bg-amber-500 hover:text-slate-950' onClick={ predictVitalsCondition }>
-        Predict Conditions
-      </button>
-
       { !isReading ? 
-          <button className='w-full p-3 rounded-md text-xl border-2 border-amber-600 hover:bg-amber-500 hover:text-slate-950 hover:border-amber-500'
-            onClick={ getSensorReadings }>
+          <button className={ buttonUI }
+            onClick={ getSensorReadings } disabled={ isDisabled }>
             Get Readings
           </button> 
           : 
