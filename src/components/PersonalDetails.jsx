@@ -31,7 +31,7 @@ const PersonalDetails = ({ setVisibility }) => {
   }; 
 
   return (
-    <div className='flex justify-center items-center p-3 border-b-2 border-gray-950 space-x-10'>
+    <div className='flex justify-center items-center p-3 border-b-2 border-gray-950 space-x-10 mb-4'>
       <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" readOnly value={ name }/>
 
       <input className='bg-transparent border-y-2 border-amber-600 rounded-md p-2 focus:border-amber-600 focus:ring-2 focus:ring-amber-600 outline-none text-center' type="text" readOnly value={ age }/>

@@ -13,6 +13,8 @@ import ActionButtons from '../components/ActionButtons';
 import ReadingAlert from '../components/ReadingAlert';
 import PredictionModal from '../components/PredictionModal';
 import PredictButton from '../components/PredictButton';
+import ResetButtonsState from '../components/ResetButtonsState';
+import { useTour } from "@reactour/tour";
 
 const Dashboard = () => {
   // Modal for editing user info and State
@@ -52,7 +54,11 @@ const Dashboard = () => {
   const [phaseTwo, setPhaseTwo] = useState(true);
   const [predictionButton, setPredictionButton] = useState(true)
 
+  const { setIsOpen } = useTour();
+
   useEffect(() => {
+    setIsOpen(true);
+
     setHeight(vitalStatistics.height);
     setWeight(vitalStatistics.weight);
     setBodyTemperature(vitalStatistics.bodyTemperature);
@@ -98,15 +104,25 @@ const Dashboard = () => {
     'respiratoryRate'
   ];
 
+  const filteredKeys = orderedKeys.filter(
+    key =>
+      vitalStatistics.hasOwnProperty(key) &&
+      !['Blood Pressure', 'Respiratory Rate'].includes(formatLabel(key))
+  );
+  
+  // Split into first row and remaining rows
+  const firstRowKeys = filteredKeys.slice(0, 3);
+  const remainingKeys = filteredKeys.slice(3);
+
   return (
     <main className='relative flex justify-center items-center'>
-      <div className="container mx-auto p-6 flex flex-col font-poppins space-y-4">
+      <div className="container mx-auto p-6 flex flex-col font-poppins" data-tour="step-1">
 
         {/* Personal Details Field Group */}
         <PersonalDetails setVisibility={ setVisibility } />
 
         {/* Rendering of Gauges */}
-        <div className='grid grid-cols-4 gap-5 p-6'>
+        <div className='flex flex-col'>
           {/* { 
             Object.entries(vitalStatistics).map(([key, value]) => (
               ['Blood Pressure', 'Respiratory Rate'].includes(formatLabel(key)) && isReading ? (
@@ -129,34 +145,90 @@ const Dashboard = () => {
             ))
           } */
             
-            orderedKeys
-              .filter(key => 
-                vitalStatistics.hasOwnProperty(key) && 
-                !['Blood Pressure', 'Respiratory Rate'].includes(formatLabel(key))
-              )
-              .map(key => {
-                if (orderedKeys.indexOf(key) === 2) {
-                    return (
-                      <>
+            // orderedKeys
+            //   .filter(key => 
+            //     vitalStatistics.hasOwnProperty(key) && 
+            //     !['Blood Pressure', 'Respiratory Rate'].includes(formatLabel(key))
+            //   )
+            //   .map(key => {
+            //     if (orderedKeys.indexOf(key) === 2) {
+            //         return (
+            //           <>
+            //             <Gauge key={key} value={vitalStatistics[key]} label={formatLabel(key)}/>
+
+            //             <ActionButtons manualValuesRef={ manualValuesRef } setPredictModal={ setPredictModal } setPredictionResult={ setPredictionResult } isReading={ isReading } setReading={ setReading } isDisabled={ phaseOne } setPhaseOne={ setPhaseOne } setPhaseTwo={ setPhaseTwo }/>
+            //           </>
+            //         )
+            //       } else if (orderedKeys.indexOf(key) === 5) {
+            //         return (
+            //           <>
+            //             <Gauge key={key} value={vitalStatistics[key]} label={formatLabel(key)} />
+
+            //             <ActionButtons manualValuesRef={ manualValuesRef } setPredictModal={ setPredictModal } setPredictionResult={ setPredictionResult } isReading={ isReading } setReading={ setReading } isDisabled={ phaseTwo } setPhaseOne={ setPhaseOne } setPhaseTwo={ setPhaseTwo }/>
+            //           </>
+            //         )
+            //       } else {
+            //         return <Gauge key={key} value={vitalStatistics[key]} label={formatLabel(key)}/>
+            //       }
+            //     }
+            //   )
+            <>
+              <div className='grid grid-cols-4 gap-5 p-6' data-tour="step-2">
+                <div className="contents">
+                  {firstRowKeys.map((key, index) => {
+                    if (orderedKeys.indexOf(key) === 2) {
+                      return (
+                        <React.Fragment key={key}>
+                          <Gauge value={vitalStatistics[key]} label={formatLabel(key)} />
+                          <ActionButtons
+                            manualValuesRef={manualValuesRef}
+                            setPredictModal={setPredictModal}
+                            setPredictionResult={setPredictionResult}
+                            isReading={isReading}
+                            setReading={setReading}
+                            isDisabled={phaseOne}
+                            setPhaseOne={setPhaseOne}
+                            setPhaseTwo={setPhaseTwo}
+                          />
+                        </React.Fragment>
+                      );
+                    } else {
+                      return (
                         <Gauge key={key} value={vitalStatistics[key]} label={formatLabel(key)} />
+                      );
+                    }
+                  })}
+                </div>
+              </div>
 
-                        <ActionButtons manualValuesRef={ manualValuesRef } setPredictModal={ setPredictModal } setPredictionResult={ setPredictionResult } isReading={ isReading } setReading={ setReading } isDisabled={ phaseOne } setPhaseOne={ setPhaseOne } setPhaseTwo={ setPhaseTwo }/>
-                      </>
-                    )
-                  } else if (orderedKeys.indexOf(key) === 5) {
-                    return (
-                      <>
+              <div className='grid grid-cols-4 gap-5 p-6 pt-0' data-tour="step-3">
+                <div className="contents">
+                  {remainingKeys.map((key, index) => {
+                    if (orderedKeys.indexOf(key) === 5) {
+                      return (
+                        <React.Fragment key={key}>
+                          <Gauge value={vitalStatistics[key]} label={formatLabel(key)} />
+                          <ActionButtons
+                            manualValuesRef={manualValuesRef}
+                            setPredictModal={setPredictModal}
+                            setPredictionResult={setPredictionResult}
+                            isReading={isReading}
+                            setReading={setReading}
+                            isDisabled={phaseTwo}
+                            setPhaseOne={setPhaseOne}
+                            setPhaseTwo={setPhaseTwo}
+                          />
+                        </React.Fragment>
+                      );
+                    } else {
+                      return (
                         <Gauge key={key} value={vitalStatistics[key]} label={formatLabel(key)} />
-
-                        <ActionButtons manualValuesRef={ manualValuesRef } setPredictModal={ setPredictModal } setPredictionResult={ setPredictionResult } isReading={ isReading } setReading={ setReading } isDisabled={ phaseTwo } setPhaseOne={ setPhaseOne } setPhaseTwo={ setPhaseTwo }/>
-                      </>
-                    )
-                  } else {
-                    return <Gauge key={key} value={vitalStatistics[key]} label={formatLabel(key)} />
-                  }
-                }
-              )
-
+                      );
+                    }
+                  })}
+                </div>
+              </div>
+            </>
           }
 
           {
@@ -164,8 +236,9 @@ const Dashboard = () => {
               <ReadingAlert />
             )
           }
+        </div>
 
-
+        <div className='grid grid-cols-4 gap-5 p-6 pt-1' data-tour="step-4">
           <div className="flex flex-col space-y-5">
             <div className="flex flex-col justify-center space-y-2">
               <label className='font-bold uppercase' htmlFor="username">Blood Pressure: </label>
@@ -197,20 +270,22 @@ const Dashboard = () => {
 
             <div className="flex flex-row space-x-5">
                 <div>
-                  <input type="radio" id="yes" name="yes" value="1"/>
+                  <input type="radio" id="yes" name="bool" value="1"/>
                   <label for="yes" className='ml-2'>Yes</label>
                 </div>
 
                 <div>
-                  <input type="radio" id="no" name="no" value="0"/>
+                  <input type="radio" id="no" name="bool" value="0"/>
                   <label for="no" className='ml-2'>No</label>
                 </div>
             </div>
           </div>
 
-          <div className='flex justify-center items-center'>
+          <div className='flex justify-center items-center' data-tour="step-5">
             <PredictButton setPredictModal={ setPredictModal } setPredictionResult={ setPredictionResult } enablePrediction={ predictionButton }/>
           </div>
+
+          <ResetButtonsState setPhaseOne={ setPhaseOne } setPhaseTwo={ setPhaseTwo } setPredictionButton={ setPredictionButton }/>
         </div>
       </div>
 

@@ -17,6 +17,10 @@ const ActionButtons = ({ manualValuesRef, isReading, setReading, isDisabled, set
 
   const [updateVitals] = useUpdateUserVitalsMutation();
 
+  // const testReactTour = () => {
+  //   setIsOpen(true);
+  // }
+
   const getSensorReadings = () => {
     // Prevent reconnecting if already connected
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) return;
