@@ -1,10 +1,11 @@
 import React from 'react';
 import { RiResetLeftLine } from "react-icons/ri";
 
-const ResetButtonsState = ({setPhaseOne, setPhaseTwo, setPredictionButton}) => {
+const ResetButtonsState = ({setPhaseOne, setPhaseTwo, setPhaseThree, setPredictionButton}) => {
   const resetState = () => {
     setPhaseOne(false);
     setPhaseTwo(true);
+    setPhaseThree(true);
     setPredictionButton(true);
   };
 

@@ -5,11 +5,16 @@ const Gauge = ({ value, label, height = 210}) => {
   const options = {
     chart: {
       type: 'radialBar',
+      // animations: {
+      //   enabled: false // ⬅️ This disables animation completely
+      // }
     },
     plotOptions: {
       radialBar: {
         startAngle: -90,
-        endAngle: 90,
+        endAngle: 90, 
+        // min: 0,
+        // max: 500,
         track: {
           background: '#333',
           startAngle: -90,
@@ -41,7 +46,7 @@ const Gauge = ({ value, label, height = 210}) => {
   };
 
   return (
-    <div className='border-x-2 border-gray-950 rounded-md flex justify-center'>
+    <div className='border-x-2 border-gray-950 rounded-md flex justify-center transition-none'>
       <Chart options={ options } series={ [value] } type="radialBar" height={ height }/>
     </div>
   );

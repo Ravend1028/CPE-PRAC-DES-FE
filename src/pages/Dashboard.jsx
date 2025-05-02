@@ -15,7 +15,7 @@ import PredictionModal from '../components/PredictionModal';
 import PredictButton from '../components/PredictButton';
 import ResetButtonsState from '../components/ResetButtonsState';
 import { useTour } from "@reactour/tour";
-import SaveManualButton from '../components/SaveManualButton';
+import ManualFields from '../components/ManualFields';
 
 const Dashboard = () => {
   // Modal for editing user info and State
@@ -42,13 +42,6 @@ const Dashboard = () => {
 
   const { userInfo } = useSelector((state) => state.auth); 
   const { vitalStatistics } = userInfo;
- 
-  const [manualValues, setManualValues] = useState({
-    bloodPressure: vitalStatistics.bloodPressure,
-    respiratoryRate: vitalStatistics.respiratoryRate
-  });
-
-  const manualValuesRef = useRef(manualValues);
 
   // Phasing State
   const [phaseOne, setPhaseOne] = useState(false);
@@ -77,9 +70,8 @@ const Dashboard = () => {
     setBMI(vitalStatistics.BMI);
     setWaistCircumference(vitalStatistics.waist);
     setHips(vitalStatistics.hips);
-    setVice(vitalStatistics.vice);
+    setVice(vitalStatistics.smokerOrNo);
 
-    manualValuesRef.current = manualValues;
   }, [
     vitalStatistics.height,
     vitalStatistics.weight,
@@ -91,8 +83,7 @@ const Dashboard = () => {
     vitalStatistics.BMI,
     vitalStatistics.waist,
     vitalStatistics.hips,
-    vitalStatistics.vice,
-    manualValues
+    vitalStatistics.smokerOrNo,
   ]);
 
   const formatLabel = (key) => {
@@ -189,7 +180,7 @@ const Dashboard = () => {
                         <React.Fragment key={key}>
                           <Gauge value={vitalStatistics[key]} label={formatLabel(key)} />
                           <ActionButtons
-                            manualValuesRef={manualValuesRef}
+                            // manualValuesRef={manualValuesRef}
                             setPredictModal={setPredictModal}
                             setPredictionResult={setPredictionResult}
                             isReading={isReading}
@@ -202,6 +193,14 @@ const Dashboard = () => {
                           />
                         </React.Fragment>
                       );
+                    } else if (orderedKeys.indexOf(key) === 0) {
+                      const heightInCM = vitalStatistics[key];
+                      const inches = (parseFloat(heightInCM) / 2.54).toFixed(2);
+                      // const feet = Math.floor(inches / 12).toFixed(2);
+                      // const remainingInches = (inches % 12).toFixed(0); // or toFixed(1) if you want precision
+                      // const heightInFeetInches = `${feet}'${remainingInches}"`;
+
+                      return <Gauge key={key} value={ inches } label={formatLabel(key)} />
                     } else {
                       return (
                         <Gauge key={key} value={vitalStatistics[key]} label={formatLabel(key)} />
@@ -219,7 +218,7 @@ const Dashboard = () => {
                         <React.Fragment key={key}>
                           <Gauge value={vitalStatistics[key]} label={formatLabel(key)} />
                           <ActionButtons
-                            manualValuesRef={manualValuesRef}
+                            // manualValuesRef={manualValuesRef}
                             setPredictModal={setPredictModal}
                             setPredictionResult={setPredictionResult}
                             isReading={isReading}
@@ -243,72 +242,30 @@ const Dashboard = () => {
             </>
           }
 
-          {
+          {/* {
             isReading && (
               <ReadingAlert />
             )
-          }
+          } */}
         </div>
 
-        <div className='grid grid-cols-4 gap-5 p-6 pt-1' data-tour="step-4">
-          <div className="flex flex-col space-y-5">
-            <div className="flex flex-col justify-center space-y-2">
-              <label className='font-bold uppercase' htmlFor="bloodPressure">Blood Pressure: </label>
-              <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="text" name='bloodPressure' value={ bloodPressure } placeholder='Enter your BP' onChange={(e) => {setBloodPressure(e.target.value)}}/>
-            </div>
-
-            <div className="flex flex-col justify-center space-y-2">
-              <label className='font-bold uppercase' htmlFor="pulseRate">Respiratory Rate: </label>
-              <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="text" name='pulseRate' value={ respiratoryRate } placeholder='Enter your Respiratory Rate' onChange={(e) => {setRespiratoryRate(e.target.value)}}/>
-            </div>
-          </div>
-
-          <div className="flex flex-col space-y-5">
-            <div className="flex flex-col justify-center space-y-2">
-              <label className='font-bold uppercase' htmlFor="waistCircumference">Waist Circumference: </label>
-              <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="text" name='waistCircumference' value={ waist } placeholder='Enter your waist' onChange={(e) => {setWaistCircumference(e.target.value)}}/>
-            </div>
-
-            <div className="flex flex-col justify-center space-y-2">
-              <label className='font-bold uppercase' htmlFor="hips">Hip Circumference: </label>
-              <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="text" name='hips' value={ hips } placeholder='Enter your hips' onChange={(e) => {setHips(e.target.value)}}/>
-            </div>
-          </div>
-
-          <div className="flex flex-col space-y-5">
-            <div className="flex flex-col justify-center space-y-2">
-              <label className='font-bold uppercase' htmlFor="waistToHipsRatio"> Waist to Hips Ratio: </label>
-              <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="number" name='waistToHipsRatio' value={ isNaN(waist/hips) || 0 ? 0 : (waist/hips).toFixed(2) }/>
-            </div>
-
-            <div className="flex flex-col justify-center items-center space-y-2">
-              <h4 className='uppercase font-bold'>
-                Smoker/Alcoholic ?
-              </h4>
-
-              <div className="flex flex-row justify-center items-center space-x-5">
-                <div>
-                  <input type="radio" id="yes" name="bool" value="1"/>
-                  <label for="yes" className='ml-2'>Yes</label>
-                </div>
-
-                <div>
-                  <input type="radio" id="no" name="bool" value="0"/>
-                  <label for="no" className='ml-2'>No</label>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <SaveManualButton isDisabled={ phaseThree } />
-        </div>
-
-        <div className="grid grid-cols-4 gap-5 p-6 pt-1 mt-5" data-tour="step-5">
-          <div className='flex justify-center items-center'>
+       {/* Manual Field */}
+        <ManualFields phaseThree={ phaseThree } setPredictionButton={ setPredictionButton } setPhaseOne={ setPhaseOne } setPhaseTwo={ setPhaseTwo } setPhaseThree={ setPhaseThree } setReading={ setReading }/>
+          
+        <div className="grid grid-cols-4 gap-5 p-6 pt-1 mt-5">
+          <div className='flex justify-center items-center' data-tour="step-5">
             <PredictButton setPredictModal={ setPredictModal } setPredictionResult={ setPredictionResult } enablePrediction={ predictionButton }/>
           </div>
 
-          <ResetButtonsState setPhaseOne={ setPhaseOne } setPhaseTwo={ setPhaseTwo } setPredictionButton={ setPredictionButton }/>
+          <ResetButtonsState setPhaseOne={ setPhaseOne } setPhaseTwo={ setPhaseTwo } setPhaseThree={ setPhaseThree } setPredictionButton={ setPredictionButton }/>
+
+          {
+            isReading && (
+              <div className='col-span-2'>
+                <ReadingAlert />
+              </div>
+            )
+          }
         </div>
       </div>
 
