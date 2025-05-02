@@ -15,6 +15,7 @@ import PredictionModal from '../components/PredictionModal';
 import PredictButton from '../components/PredictButton';
 import ResetButtonsState from '../components/ResetButtonsState';
 import { useTour } from "@reactour/tour";
+import SaveManualButton from '../components/SaveManualButton';
 
 const Dashboard = () => {
   // Modal for editing user info and State
@@ -52,12 +53,19 @@ const Dashboard = () => {
   // Phasing State
   const [phaseOne, setPhaseOne] = useState(false);
   const [phaseTwo, setPhaseTwo] = useState(true);
+  const [phaseThree, setPhaseThree] = useState(true);
   const [predictionButton, setPredictionButton] = useState(true)
 
   const { setIsOpen } = useTour();
 
   useEffect(() => {
-    setIsOpen(true);
+    // setIsOpen(true);
+    const hasSeenTour = localStorage.getItem('hasSeenTour');
+
+    if (!hasSeenTour) {
+      setIsOpen(true); 
+      localStorage.setItem('hasSeenTour', 'true');
+    }
 
     setHeight(vitalStatistics.height);
     setWeight(vitalStatistics.weight);
@@ -189,6 +197,8 @@ const Dashboard = () => {
                             isDisabled={phaseOne}
                             setPhaseOne={setPhaseOne}
                             setPhaseTwo={setPhaseTwo}
+                            setPhaseThree={setPhaseThree}
+                            id={1}
                           />
                         </React.Fragment>
                       );
@@ -217,6 +227,8 @@ const Dashboard = () => {
                             isDisabled={phaseTwo}
                             setPhaseOne={setPhaseOne}
                             setPhaseTwo={setPhaseTwo}
+                            setPhaseThree={setPhaseThree}
+                            id={2}
                           />
                         </React.Fragment>
                       );
@@ -241,34 +253,40 @@ const Dashboard = () => {
         <div className='grid grid-cols-4 gap-5 p-6 pt-1' data-tour="step-4">
           <div className="flex flex-col space-y-5">
             <div className="flex flex-col justify-center space-y-2">
-              <label className='font-bold uppercase' htmlFor="username">Blood Pressure: </label>
-              <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="text" name='username' value={ bloodPressure } placeholder='Enter your BP' onChange={(e) => {setBloodPressure(e.target.value)}}/>
+              <label className='font-bold uppercase' htmlFor="bloodPressure">Blood Pressure: </label>
+              <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="text" name='bloodPressure' value={ bloodPressure } placeholder='Enter your BP' onChange={(e) => {setBloodPressure(e.target.value)}}/>
             </div>
 
             <div className="flex flex-col justify-center space-y-2">
-              <label className='font-bold uppercase' htmlFor="username">Respiratory Rate: </label>
-              <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="text" name='username' value={ respiratoryRate } placeholder='Enter your Respiratory Rate' onChange={(e) => {setRespiratoryRate(e.target.value)}}/>
+              <label className='font-bold uppercase' htmlFor="pulseRate">Respiratory Rate: </label>
+              <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="text" name='pulseRate' value={ respiratoryRate } placeholder='Enter your Respiratory Rate' onChange={(e) => {setRespiratoryRate(e.target.value)}}/>
             </div>
           </div>
 
           <div className="flex flex-col space-y-5">
             <div className="flex flex-col justify-center space-y-2">
-              <label className='font-bold uppercase' htmlFor="username">Waist Circumference: </label>
-              <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="text" name='username' value={ waist } placeholder='Enter your waist' onChange={(e) => {setWaistCircumference(e.target.value)}}/>
+              <label className='font-bold uppercase' htmlFor="waistCircumference">Waist Circumference: </label>
+              <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="text" name='waistCircumference' value={ waist } placeholder='Enter your waist' onChange={(e) => {setWaistCircumference(e.target.value)}}/>
             </div>
 
             <div className="flex flex-col justify-center space-y-2">
-              <label className='font-bold uppercase' htmlFor="username">Hip Circumference: </label>
-              <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="text" name='username' value={ hips } placeholder='Enter your hips' onChange={(e) => {setHips(e.target.value)}}/>
+              <label className='font-bold uppercase' htmlFor="hips">Hip Circumference: </label>
+              <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="text" name='hips' value={ hips } placeholder='Enter your hips' onChange={(e) => {setHips(e.target.value)}}/>
             </div>
           </div>
 
-          <div className="flex flex-col justify-center items-center space-y-5 border-x-2 border-slate-950 rounded-md p-2">
-            <h4 className='uppercase font-bold'>
-              Smoker/Alcoholic ?
-            </h4>
+          <div className="flex flex-col space-y-5">
+            <div className="flex flex-col justify-center space-y-2">
+              <label className='font-bold uppercase' htmlFor="waistToHipsRatio"> Waist to Hips Ratio: </label>
+              <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="number" name='waistToHipsRatio' value={ isNaN(waist/hips) || 0 ? 0 : (waist/hips).toFixed(2) }/>
+            </div>
 
-            <div className="flex flex-row space-x-5">
+            <div className="flex flex-col justify-center items-center space-y-2">
+              <h4 className='uppercase font-bold'>
+                Smoker/Alcoholic ?
+              </h4>
+
+              <div className="flex flex-row justify-center items-center space-x-5">
                 <div>
                   <input type="radio" id="yes" name="bool" value="1"/>
                   <label for="yes" className='ml-2'>Yes</label>
@@ -278,10 +296,15 @@ const Dashboard = () => {
                   <input type="radio" id="no" name="bool" value="0"/>
                   <label for="no" className='ml-2'>No</label>
                 </div>
+              </div>
             </div>
           </div>
 
-          <div className='flex justify-center items-center' data-tour="step-5">
+          <SaveManualButton isDisabled={ phaseThree } />
+        </div>
+
+        <div className="grid grid-cols-4 gap-5 p-6 pt-1 mt-5" data-tour="step-5">
+          <div className='flex justify-center items-center'>
             <PredictButton setPredictModal={ setPredictModal } setPredictionResult={ setPredictionResult } enablePrediction={ predictionButton }/>
           </div>
 

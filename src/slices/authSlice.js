@@ -13,8 +13,15 @@ const authSlice = createSlice({
       localStorage.setItem('userInfo', JSON.stringify(action.payload));
     },
     setVitalStatistics: (state, action) => {
+      // if (state.userInfo) {
+      //   state.userInfo.vitalStatistics = action.payload;
+      //   localStorage.setItem('userInfo', JSON.stringify(state.userInfo)); // update localStorage
+      // }
       if (state.userInfo) {
-        state.userInfo.vitalStatistics = action.payload;
+        state.userInfo.vitalStatistics = {
+          ...state.userInfo.vitalStatistics, // keep existing values
+          ...action.payload, // overwrite only provided values
+        };
         localStorage.setItem('userInfo', JSON.stringify(state.userInfo)); // update localStorage
       }
     },

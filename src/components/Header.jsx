@@ -18,6 +18,8 @@ const Header = () => {
   const handleLogout = async (e) => {
     e.preventDefault();
 
+    localStorage.removeItem('hasSeenTour');
+
     try {
       await logoutApiCall().unwrap();
       dispatch(logout());
