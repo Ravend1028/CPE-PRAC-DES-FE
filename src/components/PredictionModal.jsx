@@ -26,7 +26,7 @@ const PredictionModal = ({ predictionResult ,setPredictModal }) => {
           {
             Object.values(predictionResult).every(value => value === 0) ? (
               <div className="text-lg uppercase text-green-400 font-bold">
-                • The patient appears healthy.
+                • The patient appears normal.
               </div>
             ) : (
               <>

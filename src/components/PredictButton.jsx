@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const PredictButton = ({ setPredictModal, setPredictionResult, enablePrediction}) => {
   const predictButtonUI = enablePrediction ? 'w-full bg-slate-200 p-3 rounded-md text-xl text-slate-400' : 'w-full bg-amber-600 p-3 rounded-md text-xl hover:bg-amber-500 hover:text-slate-950';
@@ -10,6 +11,8 @@ const PredictButton = ({ setPredictModal, setPredictionResult, enablePrediction}
   const predictVitalsCondition = async () => {
     const url = "http://127.0.0.1:8001/predict";
 
+    const { age, gender } = userInfo;
+  
     const {
       height,
       weight,
@@ -18,27 +21,45 @@ const PredictButton = ({ setPredictModal, setPredictionResult, enablePrediction}
       pulseRate,
       respiratoryRate,
       bodyTemperature,
-      bloodOxygenLevel
+      bloodOxygenLevel,
+      smokerOrNo,
+      waist,
+      hips
     } = vitalStatistics;
 
     const [ systolicBP, diastolicBP]  = bloodPressure
     .split("/")
     .map(val => parseFloat(val));
 
+    const ratio = parseFloat(waist / hips).toFixed(2);
+
+    if (isNaN(ratio) || 0) {
+      ratio = 0;
+    }
+
+    const genderBinary = gender === 'M' ? 1 : 0;
+
+
     const features = [
-      parseFloat(height),
-      parseFloat(weight),
-      parseFloat(BMI),
+      parseInt(age),
+      parseInt(genderBinary),
+      parseInt(smokerOrNo),
       systolicBP,
       diastolicBP,
       parseFloat(pulseRate),
       parseFloat(respiratoryRate),
       parseFloat(bodyTemperature),
+      parseFloat(weight),
+      parseFloat(height),
+      parseFloat(waist),
+      parseFloat(hips),
       parseFloat(bloodOxygenLevel),
+      ratio,
+      parseFloat(BMI),
     ];
 
-    if (features.some(val => val === 0 || isNaN(val))) {
-      toast.error("All values must be greater than 0 and valid numbers");
+    if (features.some(val => isNaN(val))) {
+      toast.error("All values must be valid numbers");
       return;
     }
 
@@ -57,7 +78,6 @@ const PredictButton = ({ setPredictModal, setPredictionResult, enablePrediction}
   
       const json = await res.json();
       setPredictionResult(json);
-      // console.log(json);
       setPredictModal(true);
 
     } catch (err) {

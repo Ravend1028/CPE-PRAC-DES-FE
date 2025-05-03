@@ -31,7 +31,7 @@ const Header = () => {
 
   return (
     <header className='bg-gray-950 text-white font-poppins'>
-      <div className='container mx-auto p-6 flex flex-col justify-center items-start space-y-5'>
+      <div className='container mx-auto p-6 flex flex-col justify-center items-start space-y-5 pt-0'>
         <ToastContainer />
         
         <div className="flex flex-row justify-center items-center space-x-2">

@@ -82,7 +82,11 @@ const ManualFields = ({ phaseThree, setPredictionButton, setPhaseOne, setPhaseTw
   };
 
   return (
-    <div className='grid grid-cols-4 gap-5 p-6 pt-1' data-tour="step-4">
+    <div className='relative grid grid-cols-4 gap-5 p-6 pt-1' data-tour="step-4">
+      <h6 className='absolute -top-6 -right-5 uppercase font-bold text-red-600'>
+        Phase 3
+      </h6>
+
       <div className="flex flex-col space-y-5">
         <div className="flex flex-col justify-center space-y-2">
           <label className='font-bold uppercase' htmlFor="bloodPressure">Blood Pressure: </label>

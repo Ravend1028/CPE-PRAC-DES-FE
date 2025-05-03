@@ -172,7 +172,11 @@ const Dashboard = () => {
             //     }
             //   )
             <>
-              <div className='grid grid-cols-4 gap-5 p-6' data-tour="step-2">
+              <div className='relative grid grid-cols-4 gap-5 p-6' data-tour="step-2">
+                <h6 className='absolute -top-1 -right-5 uppercase font-bold text-red-600'>
+                 Phase 1
+                </h6>
+
                 <div className="contents">
                   {firstRowKeys.map((key, index) => {
                     if (orderedKeys.indexOf(key) === 2) {
@@ -210,7 +214,11 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className='grid grid-cols-4 gap-5 p-6 pt-0' data-tour="step-3">
+              <div className='relative grid grid-cols-4 gap-5 p-6 pt-0' data-tour="step-3">
+                <h6 className='absolute -top-6 -right-5 uppercase font-bold text-red-600'>
+                 Phase 2
+                </h6>
+
                 <div className="contents">
                   {remainingKeys.map((key, index) => {
                     if (orderedKeys.indexOf(key) === 5) {
