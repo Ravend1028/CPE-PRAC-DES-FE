@@ -1,7 +1,7 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 
-const Gauge = ({ value, label, height = 210}) => {
+const Gauge = ({ value, label, height = 210, unit = ""}) => {
   const options = {
     chart: {
       type: 'radialBar',
@@ -35,7 +35,7 @@ const Gauge = ({ value, label, height = 210}) => {
             fontWeight: 'bold',
             offsetY: -15,
             formatter: function (val) {
-              return val; // Display the raw value instead of percentage
+              return `${val}${unit ? ' ' + unit : ''}`;
             },
           },
         },

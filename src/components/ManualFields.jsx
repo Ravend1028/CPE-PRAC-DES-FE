@@ -14,6 +14,8 @@ const ManualFields = ({ phaseThree, setPredictionButton, setPhaseOne, setPhaseTw
   const [waist, setWaistCircumference] = useState('');
   const [hips, setHips] = useState('');
   const [vice, setVice] = useState('');
+  const [systolic, setSystolic] = useState('');
+  const [diastolic, setDiastolic] = useState('');
 
   const { userInfo } = useSelector((state) => state.auth); 
   const { vitalStatistics } = userInfo;
@@ -33,27 +35,27 @@ const ManualFields = ({ phaseThree, setPredictionButton, setPhaseOne, setPhaseTw
   const [updateVitals] = useUpdateUserVitalsMutation();
   const vitalRef = useRef(vitalStatistics);
 
+  
   useEffect(() => {
-    setBloodPressure(vitalStatistics.bloodPressure);
+
+    const [sys, dia] = vitalStatistics.bloodPressure.split('/');
+    setSystolic(sys);
+    setDiastolic(dia);
+    setBloodPressure(vitalStatistics.bloodPressure)
     setRespiratoryRate(vitalStatistics.respiratoryRate);
     setWaistCircumference(vitalStatistics.waist);
     setHips(vitalStatistics.hips);
     setVice(vitalStatistics.smokerOrNo);
 
     vitalRef.current = vitalStatistics;
-
-    // manualValuesRef.current = manualValues;
   }, [
     vitalStatistics
-    // manualValues
   ]);
 
   const saveManualReadings = async () => {
-    // create a json based from input field states
-    // then submit the fucking json to the database o diba hgaling tangina
     const manualData = {
       respiratoryRate,
-      bloodPressure,
+      bloodPressure: `${systolic}/${diastolic}`,
       waist,
       hips,
       smokerOrNo: vice
@@ -88,7 +90,7 @@ const ManualFields = ({ phaseThree, setPredictionButton, setPhaseOne, setPhaseTw
       </h6>
 
       <div className="flex flex-col space-y-5">
-        <div className="flex flex-col justify-center space-y-2">
+        {/* <div className="flex flex-col justify-center space-y-2">
           <label className='font-bold uppercase' htmlFor="bloodPressure">Blood Pressure: </label>
           <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="text" name='bloodPressure' value={ bloodPressure } placeholder='Enter your BP' 
           onChange={(e) => {
@@ -102,53 +104,86 @@ const ManualFields = ({ phaseThree, setPredictionButton, setPhaseOne, setPhaseTw
             // }));
 
             }}/>
+        </div> */}
+        <div className="flex flex-col justify-center space-y-2">
+          <label className='font-bold uppercase' htmlFor="bloodPressure">Blood Pressure: (Systolic / Diastolic)</label>
+          <div className='flex flex-row justify-between items-center space-x-3'>
+            <select
+              className='w-1/2 bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none'
+              value={systolic}
+              onChange={(e) => setSystolic(e.target.value)}
+            >
+              <option value="">Select Systolic</option>
+              {[...Array(200)].map((_, i) => {
+                const val = 1 + i; // 90 to 180
+                return <option key={val} value={val}>{val}</option>;
+              })}
+            </select>
+
+            <p>
+              /
+            </p>
+
+            <select
+              className='w-1/2 bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none'
+              value={diastolic}
+              onChange={(e) => setDiastolic(e.target.value)}
+            >
+              <option value="">Select Diastolic</option>
+              {[...Array(200)].map((_, i) => {
+                const val = 1 + i; // 60 to 120
+                return <option key={val} value={val}>{val}</option>;
+              })}
+            </select>
+          </div>
+
         </div>
 
         <div className="flex flex-col justify-center space-y-2">
-          <label className='font-bold uppercase' htmlFor="respiratoryRate">Respiratory Rate: </label>
-          <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="number" name='respiratoryRate' value={ respiratoryRate } placeholder='Enter your Respiratory Rate' 
-          onChange={(e) => {
-            const newValue = e.target.value;
-            setRespiratoryRate(newValue);
-
-            // setManualValues((prev) => ({
-            //   ...prev,
-            //   respiratoryRate: newValue
-            // }));
-            
-            }}/>
+          <label className='font-bold uppercase' htmlFor="respiratoryRate">Respiratory Rate: (bpm)</label>
+          <select
+            className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none'
+            value={respiratoryRate}
+            onChange={(e) => setRespiratoryRate(e.target.value)}
+          >
+            <option value="">Select Rate</option>
+            {[...Array(100)].map((_, i) => {
+              const val = 1 + i; // 10 to 100
+              return <option key={val} value={val}>{val}</option>;
+            })}
+          </select>
         </div>
       </div>
 
       <div className="flex flex-col space-y-5">
         <div className="flex flex-col justify-center space-y-2">
-          <label className='font-bold uppercase' htmlFor="waist">Waist Circumference: </label>
-          <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="number" name='waist' value={ waist } placeholder='Enter your waist' 
-          onChange={(e) => {
-            const newValue = e.target.value;
-            setWaistCircumference(newValue)
-
-            // setManualValues((prev) => ({
-            //   ...prev,
-            //   waist: newValue
-            // }));
-
-            }}/>
+          <label className='font-bold uppercase' htmlFor="waist">Waist Circumference: (cm)</label>
+          <select
+            className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none'
+            value={waist}
+            onChange={(e) => setWaistCircumference(e.target.value)}
+          >
+            <option value="">Select Waist (cm)</option>
+            {[...Array(100)].map((_, i) => {
+              const val = 1 + i; // 50 to 150 cm
+              return <option key={val} value={val}>{val}</option>;
+            })}
+          </select>
         </div>
 
         <div className="flex flex-col justify-center space-y-2">
-          <label className='font-bold uppercase' htmlFor="hips">Hip Circumference: </label>
-          <input className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none' type="number" name='hips' value={ hips } placeholder='Enter your hips' 
-          onChange={(e) => {
-            const newValue = e.target.value;
-            setHips(newValue)
-            
-            // setManualValues((prev) => ({
-            //   ...prev,
-            //   hips: newValue
-            // }));
-
-            }}/>
+          <label className='font-bold uppercase' htmlFor="hips">Hip Circumference: (cm)</label>
+          <select
+            className='bg-transparent border-x-2 border-slate-950 rounded-md p-2 focus:border-slate-950 focus:ring-2 focus:ring-slate-950 outline-none'
+            value={hips}
+            onChange={(e) => setHips(e.target.value)}
+          >
+            <option value="">Select Hips (cm)</option>
+            {[...Array(100)].map((_, i) => {
+              const val = 1 + i; // 50 to 150 cm
+              return <option key={val} value={val}>{val}</option>;
+            })}
+          </select>
         </div>
       </div>
 

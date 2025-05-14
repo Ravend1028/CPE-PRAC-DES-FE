@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setVitalStatistics } from '../slices/authSlice';
 import { useUpdateUserVitalsMutation } from '../slices/usersApiSlice';
 
-const ActionButtons = ({ manualValuesRef, isReading, setReading, isDisabled, setPhaseOne, setPhaseTwo, setPhaseThree, id }) => {
+const ActionButtons = ({ manualValuesRef, isReading, setReading, isDisabled, setPhaseOne, setPhaseTwo, setPhaseThree, id, setPulseModal }) => {
   const buttonUI = isDisabled ? 'flex justify-center items-center w-full p-3 rounded-md text-xl bg-slate-200 text-slate-400' : 'flex justify-center items-center w-full p-3 rounded-md text-xl border-2 border-amber-600 hover:bg-amber-500 hover:text-slate-950 hover:border-amber-500';
 
   const socketRef = useRef(null);
@@ -104,7 +104,9 @@ const ActionButtons = ({ manualValuesRef, isReading, setReading, isDisabled, set
               setPhaseTwo(false);
               setPhaseOne(true);
               setPhaseThree(true);
-
+              setTimeout(() => {
+                setPulseModal(true);
+              }, 1000);
             } else if (id === 2) {
               console.log("Body Temp: ", bodyTempRef.current);
               console.log("Pulse Rate: ", pulseRateRef.current);

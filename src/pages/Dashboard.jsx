@@ -16,6 +16,7 @@ import PredictButton from '../components/PredictButton';
 import ResetButtonsState from '../components/ResetButtonsState';
 import { useTour } from "@reactour/tour";
 import ManualFields from '../components/ManualFields';
+import HoldPulseIndicator from '../components/HoldPulseIndicator';
 
 const Dashboard = () => {
   // Modal for editing user info and State
@@ -48,6 +49,7 @@ const Dashboard = () => {
   const [phaseTwo, setPhaseTwo] = useState(true);
   const [phaseThree, setPhaseThree] = useState(true);
   const [predictionButton, setPredictionButton] = useState(true)
+  const [pulseModal, setPulseModal] = useState(false);
 
   const { setIsOpen } = useTour();
 
@@ -102,6 +104,17 @@ const Dashboard = () => {
     'bloodPressure',
     'respiratoryRate'
   ];
+
+  const unitMap = {
+    height: 'inch',
+    weight: 'kg',
+    BMI: '',
+    bodyTemperature: '°C',
+    bloodOxygenLevel: '%',
+    pulseRate: 'bpm',
+    bloodPressure: 'mmHg',
+    respiratoryRate: 'breaths/min',
+  };
 
   const filteredKeys = orderedKeys.filter(
     key =>
@@ -182,7 +195,7 @@ const Dashboard = () => {
                     if (orderedKeys.indexOf(key) === 2) {
                       return (
                         <React.Fragment key={key}>
-                          <Gauge value={vitalStatistics[key]} label={formatLabel(key)} />
+                          <Gauge value={ vitalStatistics[key] } label={ formatLabel(key) } unit={ unitMap[key] } />
                           <ActionButtons
                             // manualValuesRef={manualValuesRef}
                             setPredictModal={setPredictModal}
@@ -193,22 +206,29 @@ const Dashboard = () => {
                             setPhaseOne={setPhaseOne}
                             setPhaseTwo={setPhaseTwo}
                             setPhaseThree={setPhaseThree}
+                            setPulseModal={setPulseModal}
                             id={1}
                           />
                         </React.Fragment>
                       );
                     } else if (orderedKeys.indexOf(key) === 0) {
                       const heightInCM = vitalStatistics[key];
-                      const inches = (parseFloat(heightInCM) / 2.54).toFixed(2);
+                      let inches = 0;
+                      {
+                        if (parseFloat(heightInCM) / 2.54 > 0) {
+                          inches = (parseFloat(heightInCM) / 2.54).toFixed(2);
+                        }
+                      }
+                      
                       // const feet = Math.floor(inches / 12).toFixed(2);
                       // const remainingInches = (inches % 12).toFixed(0); // or toFixed(1) if you want precision
                       // const heightInFeetInches = `${feet}'${remainingInches}"`;
 
-                      return <Gauge key={key} value={ inches } label={formatLabel(key)} />
+                      return <Gauge key={key} value={ inches  } label={ formatLabel(key) } unit={ unitMap[key] } />
                     } else {
                       return (
-                        <Gauge key={key} value={vitalStatistics[key]} label={formatLabel(key)} />
-                      );
+                        <Gauge key={key} value={ vitalStatistics[key] } label={ formatLabel(key) } unit={ unitMap[key] } />
+                      ); 
                     }
                   })}
                 </div>
@@ -224,7 +244,7 @@ const Dashboard = () => {
                     if (orderedKeys.indexOf(key) === 5) {
                       return (
                         <React.Fragment key={key}>
-                          <Gauge value={vitalStatistics[key]} label={formatLabel(key)} />
+                          <Gauge value={ vitalStatistics[key] } label={ formatLabel(key) } unit={ unitMap[key] } />
                           <ActionButtons
                             // manualValuesRef={manualValuesRef}
                             setPredictModal={setPredictModal}
@@ -241,7 +261,7 @@ const Dashboard = () => {
                       );
                     } else {
                       return (
-                        <Gauge key={key} value={vitalStatistics[key]} label={formatLabel(key)} />
+                        <Gauge key={ key } value={ vitalStatistics[key] } label={ formatLabel(key) } unit={ unitMap[key] } />
                       );
                     }
                   })}
@@ -277,6 +297,8 @@ const Dashboard = () => {
         </div>
       </div>
 
+      {/* MODALS: */}
+
       {/* Edit User Info Modal */}
       {
         isVisible && (
@@ -288,6 +310,11 @@ const Dashboard = () => {
       {
         predictModal && (
           <PredictionModal predictionResult={ predictionResult } setPredictModal={ setPredictModal }/>
+        )
+      }
+      {
+        pulseModal && (
+          <HoldPulseIndicator setPulseModal={ setPulseModal }/>
         )
       }
     </main>
