@@ -48,7 +48,7 @@ const Dashboard = () => {
   const [phaseOne, setPhaseOne] = useState(false);
   const [phaseTwo, setPhaseTwo] = useState(true);
   const [phaseThree, setPhaseThree] = useState(true);
-  const [predictionButton, setPredictionButton] = useState(true)
+  const [predictionButton, setPredictionButton] = useState(true);
   const [pulseModal, setPulseModal] = useState(false);
 
   const { setIsOpen } = useTour();

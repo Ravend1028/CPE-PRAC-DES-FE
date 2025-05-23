@@ -31,7 +31,7 @@ const PredictButton = ({ setPredictModal, setPredictionResult, enablePrediction}
     .split("/")
     .map(val => parseFloat(val));
 
-    const ratio = parseFloat(waist / hips).toFixed(2);
+    let ratio = parseFloat(waist / hips).toFixed(2);
 
     if (isNaN(ratio) || 0) {
       ratio = 0;
